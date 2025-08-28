@@ -1,15 +1,26 @@
+// components/TopNav.tsx
 "use client";
+
 import Link from "next/link";
 
 export default function TopNav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur supports-[backdrop-filter]:bg-black/40">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 text-sm">
-        <Link href="/" className="font-extrabold tracking-tight">MARTY</Link>
-        <div className="flex items-center gap-5">
-          <a href="#why" className="hover:opacity-80">Why MARTY</a>
-          <a href="#journal" className="hover:opacity-80">Try</a>
-          <a href="#fund" className="rounded-full border border-white/30 px-3 py-1 hover:bg-white hover:text-black transition">Fund</a>
+    <header className="sticky top-0 z-50 w-full bg-black/70 backdrop-blur border-b border-white/10">
+      <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+        <Link href="/" className="text-sm font-bold tracking-wide">
+          the <span className="font-extrabold">MARTY</span> app
+        </Link>
+
+        <div className="flex items-center gap-5 text-sm">
+          <a href="#why" className="hover:text-white/90 text-white/70">Why MARTY</a>
+          <Link href="/faq" className="hover:text-white/90 text-white/70">FAQ</Link>
+          <a href="#journal" className="hover:text-white/90 text-white/70">Journal</a>
+          <Link
+            href="/fund"
+            className="rounded-full border border-white/20 px-3 py-1.5 hover:bg-white hover:text-black transition"
+          >
+            Fund
+          </Link>
         </div>
       </nav>
     </header>

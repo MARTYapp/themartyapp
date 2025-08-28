@@ -1,6 +1,8 @@
 // app/page.tsx
 import Image from "next/image";
 import Link from "next/link";
+import WhyMarty from "@/components/WhyMarty";
+import FAQ from "@/components/FAQ";
 
 export default function Home() {
   return (
@@ -33,8 +35,7 @@ export default function Home() {
 
           {/* Tagline */}
           <p className="mt-6 max-w-2xl text-white/75 text-[clamp(14px,2.6vw,18px)] leading-relaxed">
-            Quiet tech for loud minds. Built for the avoiders, the overthinkers, and the night-crawlers.
-            Not your therapist. Not your dad. Just MARTY.
+            Quiet tech for loud minds. Not a therapist. Not a vibe app. Just MARTY.
           </p>
 
           {/* CTAs */}
@@ -47,61 +48,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* === MEET MARTY AI === */}
-      <section id="meet" className="relative py-20 px-6 bg-gradient-to-b from-black to-marty-bg">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tighter">Meet MARTY AI</h2>
-          <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
-            Your emotionally steady, trauma-informed digital bro. Voice-first. Neuro-inclusive.
-            When you journal with MARTY, you’re not just venting — you’re in an interactive reflection loop
-            where real tools meet real talk.
-          </p>
+      <WhyMarty />
 
-          {/* “Fight card” feature grid */}
-          <div className="mt-10 grid gap-6 sm:grid-cols-3 text-left">
-            <article className="card">
-              <div className="text-[10px] uppercase tracking-widest text-white/50 mb-2">Round 1</div>
-              <h3 className="text-2xl font-semibold mb-2">🧠 Pattern Recognizer</h3>
-              <p className="text-white/75 text-sm leading-relaxed">
-                Flags mental loops, distorted thoughts, and recurring narratives — so you can break the cycle and rewire them.
-              </p>
-            </article>
-
-            <article className="card">
-              <div className="text-[10px] uppercase tracking-widest text-white/50 mb-2">Round 2</div>
-              <h3 className="text-2xl font-semibold mb-2">📓 DBT + EF Visualizer</h3>
-              <p className="text-white/75 text-sm leading-relaxed">
-                Visual coaching rooted in DBT + Executive Functioning — calm your chaos and add structure you can stick to.
-              </p>
-            </article>
-
-            <article className="card">
-              <div className="text-[10px] uppercase tracking-widest text-white/50 mb-2">Round 3</div>
-              <h3 className="text-2xl font-semibold mb-2">🪞 Backward Review Journaling</h3>
-              <p className="text-white/75 text-sm leading-relaxed">
-                One day at a time. No judgment. Debriefs that make your story feel seen — and your patterns beatable.
-              </p>
-            </article>
-          </div>
-
-          <div className="mt-10 flex items-center justify-center gap-4">
-            <Link href="#journal" className="btn btn-primary">Try MARTY</Link>
-            <Link href="#fund" className="btn btn-outline">Fund MARTY</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* === POSTER BANNER === */}
-      <section className="relative py-16 px-6 bg-black">
-        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-white/[.04] p-8 sm:p-12 text-center">
-          <div className="absolute inset-0 noise" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,.06),transparent_60%)]" />
-          <h3 className="text-[clamp(40px,8.5vw,100px)] font-extrabold leading-none tracking-tighter">
-            MARTY <span className="align-[12%] text-white/80">≠</span> THERAPY
-          </h3>
-          <p className="mt-3 text-white/80 max-w-2xl mx-auto">Quiet tech for loud minds.</p>
-        </div>
-      </section>
+      <FAQ compact />
 
       {/* === JOURNAL DEMO === */}
       <section id="journal" className="relative py-20 px-6 bg-black">
@@ -132,7 +81,7 @@ export default function Home() {
         <div className="mx-auto max-w-3xl text-center">
           <h3 className="text-3xl font-bold mb-4 tracking-tighter">Fund the Founder</h3>
           <p className="text-white/80 max-w-xl mx-auto">
-            Every dollar goes straight into building MARTY — servers, prototypes, design, survival. Thank you. 🙏
+            Every dollar goes straight into building MARTY — servers, prototypes, survival. No VC filter. Just you + the founder making this real.
           </p>
           <div className="mt-8 flex items-center justify-center gap-4">
             <Link href="/fund" className="btn btn-primary">Stripe / Checkout</Link>
