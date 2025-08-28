@@ -1,103 +1,157 @@
+// app/page.tsx
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen w-full bg-marty-bg text-white">
+      {/* === HERO === */}
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+        {/* BG layers */}
+        <div className="absolute inset-0 bg-hero-texture" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />
+        <div className="noise" />
+        <div className="sweep" aria-hidden />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        {/* Content */}
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center">
+          {/* Logo above heading */}
+          <Image
+            src="/branding/logo-primary.png"
+            alt="the MARTY app"
+            width={220}
+            height={220}
+            priority
+            className="mb-6"
+          />
+
+          {/* Wordmark headline */}
+          <h1 className="text-[clamp(42px,9vw,112px)] leading-none font-extrabold tracking-tighter drop-shadow-glow">
+            MARTY <span className="align-[12%] text-white/85">≠</span> THERAPY
+          </h1>
+          <p className="mt-3 text-[clamp(18px,3.5vw,34px)] font-semibold">Just MARTY</p>
+
+          {/* Tagline */}
+          <p className="mt-6 max-w-2xl text-white/75 text-[clamp(14px,2.6vw,18px)] leading-relaxed">
+            Quiet tech for loud minds. Built for the avoiders, the overthinkers, and the night-crawlers.
+            Not your therapist. Not your dad. Just MARTY.
+          </p>
+
+          {/* CTAs */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link href="#journal" className="btn btn-primary">Try Marty Now</Link>
+            <Link href="#fund" className="btn btn-outline">Fund Marty</Link>
+          </div>
+
+          <div className="mt-10 text-xs text-white/50">scroll</div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* === MEET MARTY AI === */}
+      <section id="meet" className="relative py-20 px-6 bg-gradient-to-b from-black to-marty-bg">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tighter">Meet MARTY AI</h2>
+          <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
+            Your emotionally steady, trauma-informed digital bro. Voice-first. Neuro-inclusive.
+            When you journal with MARTY, you’re not just venting — you’re in an interactive reflection loop
+            where real tools meet real talk.
+          </p>
+
+          {/* “Fight card” feature grid */}
+          <div className="mt-10 grid gap-6 sm:grid-cols-3 text-left">
+            <article className="card">
+              <div className="text-[10px] uppercase tracking-widest text-white/50 mb-2">Round 1</div>
+              <h3 className="text-2xl font-semibold mb-2">🧠 Pattern Recognizer</h3>
+              <p className="text-white/75 text-sm leading-relaxed">
+                Flags mental loops, distorted thoughts, and recurring narratives — so you can break the cycle and rewire them.
+              </p>
+            </article>
+
+            <article className="card">
+              <div className="text-[10px] uppercase tracking-widest text-white/50 mb-2">Round 2</div>
+              <h3 className="text-2xl font-semibold mb-2">📓 DBT + EF Visualizer</h3>
+              <p className="text-white/75 text-sm leading-relaxed">
+                Visual coaching rooted in DBT + Executive Functioning — calm your chaos and add structure you can stick to.
+              </p>
+            </article>
+
+            <article className="card">
+              <div className="text-[10px] uppercase tracking-widest text-white/50 mb-2">Round 3</div>
+              <h3 className="text-2xl font-semibold mb-2">🪞 Backward Review Journaling</h3>
+              <p className="text-white/75 text-sm leading-relaxed">
+                One day at a time. No judgment. Debriefs that make your story feel seen — and your patterns beatable.
+              </p>
+            </article>
+          </div>
+
+          <div className="mt-10 flex items-center justify-center gap-4">
+            <Link href="#journal" className="btn btn-primary">Try MARTY</Link>
+            <Link href="#fund" className="btn btn-outline">Fund MARTY</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* === POSTER BANNER === */}
+      <section className="relative py-16 px-6 bg-black">
+        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-white/[.04] p-8 sm:p-12 text-center">
+          <div className="absolute inset-0 noise" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,.06),transparent_60%)]" />
+          <h3 className="text-[clamp(40px,8.5vw,100px)] font-extrabold leading-none tracking-tighter">
+            MARTY <span className="align-[12%] text-white/80">≠</span> THERAPY
+          </h3>
+          <p className="mt-3 text-white/80 max-w-2xl mx-auto">Quiet tech for loud minds.</p>
+        </div>
+      </section>
+
+      {/* === JOURNAL DEMO === */}
+      <section id="journal" className="relative py-20 px-6 bg-black">
+        <div className="mx-auto max-w-4xl text-center">
+          <h3 className="text-3xl font-bold mb-6 tracking-tighter">Your MARTY Journal</h3>
+          <div className="mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-4 text-left">
+            <input
+              placeholder="Type your thought…"
+              className="w-full rounded-xl bg-black/40 px-4 py-3 outline-none placeholder:text-white/40"
+            />
+            <div className="mt-3 flex justify-end gap-3">
+              <Link href="/journal" className="btn btn-primary">Open Full Journal</Link>
+              <a
+                href="https://buymeacoffee.com/ericadler"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline"
+              >
+                Fund This Build
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* === FUND CTA === */}
+      <section id="fund" className="relative py-20 px-6 bg-gradient-to-b from-marty-bg to-black">
+        <div className="mx-auto max-w-3xl text-center">
+          <h3 className="text-3xl font-bold mb-4 tracking-tighter">Fund the Founder</h3>
+          <p className="text-white/80 max-w-xl mx-auto">
+            Every dollar goes straight into building MARTY — servers, prototypes, design, survival. Thank you. 🙏
+          </p>
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <Link href="/fund" className="btn btn-primary">Stripe / Checkout</Link>
+            <a
+              href="https://buymeacoffee.com/ericadler"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline"
+            >
+              Buy Me a Coffee
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* === FOOTER === */}
+      <footer className="border-t border-white/10 text-center text-xs text-white/60 py-8">
+        MARTY ≠ THERAPY — Not a therapist. Not a vibe app. Just MARTY.
       </footer>
-    </div>
+    </main>
   );
 }
