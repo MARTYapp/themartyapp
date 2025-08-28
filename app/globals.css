@@ -28,3 +28,58 @@ body {
 /* MARTY typographic tweaks */
 :root { --marty-leading: 1.05 }
 h1, h2, h3 { line-height: var(--marty-leading); letter-spacing: -0.01em }
+/* app/globals.css */
+
+.sweep{ mix-blend-mode: screen; opacity:.18; }      /* was higher */
+@media (max-width: 640px){
+  .sweep{ display:none; }                           /* disable on mobile */
+  .noise{ opacity:.22; }                            /* subtle grain only */
+}
+
+/* ---- MARTY site components & effects ---- */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition;
+  }
+  .btn-primary {
+    @apply btn bg-white text-black hover:bg-white/90;
+  }
+  .btn-outline {
+    @apply btn border border-white/20 text-white hover:bg-white hover:text-black;
+  }
+  .card {
+    @apply rounded-2xl border border-white/10 bg-white/[.04] p-5;
+  }
+}
+
+/* Cinematic sweep band overlay */
+.sweep{
+  position: absolute;
+  inset: -10% 0;
+  background: linear-gradient(100deg, rgba(255,255,255,0) 0%,
+    rgba(255,255,255,.08) 40%, rgba(255,255,255,0) 80%);
+  mix-blend-mode: screen;
+  animation: sweep 12s linear infinite;
+  pointer-events: none;
+}
+
+/* Lightweight grain/noise overlay (GPU-cheap) */
+.noise{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+  animation: grain 8s steps(6) infinite;
+}
+
+/* Mobile: dim center a touch to avoid washout on iOS */
+@media (max-width: 640px){
+  .hero-dim-mask{
+    position:absolute; inset:0;
+    background: radial-gradient(circle at center, rgba(0,0,0,.18), transparent 55%);
+    pointer-events:none;
+  }
+}
