@@ -83,3 +83,29 @@ h1, h2, h3 { line-height: var(--marty-leading); letter-spacing: -0.01em }
     pointer-events:none;
   }
 }
+/* ---- FIX: legal Tailwind @apply for button variants (no @apply btn) ---- */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition;
+  }
+  .btn-primary {
+    /* used with: class="btn btn-primary" */
+    @apply bg-white text-black hover:bg-white/90;
+  }
+  .btn-outline {
+    /* used with: class="btn btn-outline" */
+    @apply border border-white/20 text-white hover:bg-white hover:text-black;
+  }
+  .card {
+    @apply rounded-2xl border border-white/10 bg-white/[.04] p-5;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition;
+  }
+  .btn-primary { @apply bg-white text-black hover:bg-white/90; }
+  .btn-outline { @apply border border-white/20 text-white hover:bg-white hover:text-black; }
+  .card { @apply rounded-2xl border border-white/10 bg-white/[.04] p-5; }
+}

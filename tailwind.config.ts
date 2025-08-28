@@ -22,6 +22,10 @@ const config: Config = {
       },
       backgroundImage: {
         "hero-texture":
+        "hero-texture-sm":
+          "radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.028), transparent 42%)",
+        "hero-texture-sm":
+          "radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.028), transparent 42%)",
           "radial-gradient(ellipse at 50% -20%, rgba(255,255,255,.06), transparent 55%)",
         "marty-gradient": "linear-gradient(90deg,#6D28D9,#F5D06F)",
         "marty-steel": "linear-gradient(180deg,#1a1c22,#0b0c12)",
