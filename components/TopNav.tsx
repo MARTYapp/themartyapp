@@ -1,18 +1,17 @@
-// components/TopNav.tsx
+"use client";
 import Link from "next/link";
 
 export default function TopNav() {
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 bg-black/70 backdrop-blur border-b border-white/10">
-      <div className="mx-auto max-w-6xl px-4 h-12 flex items-center justify-between text-sm">
-        <Link href="/" className="font-bold tracking-wider">MARTY</Link>
-        <div className="flex items-center gap-4">
-          <a href="#why" className="text-white/80 hover:text-white transition">Why MARTY</a>
-          <a href="#journal" className="text-white/80 hover:text-white transition">Journal</a>
-          <a href="#fund" className="text-white/80 hover:text-white transition">Fund</a>
-          <Link href="/faq" className="text-white/80 hover:text-white transition">FAQ</Link>
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur supports-[backdrop-filter]:bg-black/40">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 text-sm">
+        <Link href="/" className="font-extrabold tracking-tight">MARTY</Link>
+        <div className="flex items-center gap-5">
+          <a href="#why" className="hover:opacity-80">Why MARTY</a>
+          <a href="#journal" className="hover:opacity-80">Try</a>
+          <a href="#fund" className="rounded-full border border-white/30 px-3 py-1 hover:bg-white hover:text-black transition">Fund</a>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }

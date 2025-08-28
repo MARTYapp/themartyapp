@@ -1,45 +1,24 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import type { ReactNode } from "react";
+import TopNav from "@/components/TopNav";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "MARTY ≠ THERAPY — Just MARTY",
   description: "Quiet tech for loud minds. Voice-first, neuro-inclusive. Built different.",
-  icons: {
-    icon: "/branding/favicon.ico.png",
-  },
   openGraph: {
     title: "MARTY ≠ THERAPY — Just MARTY",
-    description: "Quiet tech for loud minds. Voice-first, neuro-inclusive. Built different.",
-    url: "https://themartyapp.com",
+    description: "Quiet tech for loud minds.",
+    images: [{ url: "/branding/social-opengraph.png", width: 1200, height: 630 }],
     siteName: "theMARTYapp",
-    images: [
-      {
-        url: "/branding/social-opengraph.png",
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "MARTY ≠ THERAPY — Just MARTY",
-    description: "Quiet tech for loud minds. Voice-first, neuro-inclusive. Built different.",
     images: ["/branding/social-opengraph.png"],
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" className="bg-black">
-      <body className="bg-black text-white antialiased">{children}</body>
-    </html>
-  );
-}import "./globals.css";
-import TopNav from "@/components/TopNav";
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="bg-black">
       <body className="bg-black text-white antialiased">
