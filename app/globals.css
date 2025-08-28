@@ -30,12 +30,18 @@ h1, h2, h3 { line-height: var(--marty-leading); letter-spacing: -0.01em }
 
 @media (max-width:640px){ .sweep{ display:none } .noise{ opacity:.22 } }
 
-/* Tailwind component layer (legal utilities only) */
-@layer components {
-  .btn { @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition; }
-  .btn-primary { @apply bg-white text-black hover:bg-white/90; }
-  .btn-outline { @apply border border-white/20 text-white hover:bg-white hover:text-black; }
-  .card { @apply rounded-2xl border border-white/10 bg-white/[.04] p-5; }
+/* Tailwind v4 custom utilities (instead of @layer components) */
+@utility btn {
+  @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition;
+}
+@utility btn-primary {
+  @apply bg-white text-black hover:bg-white/90;
+}
+@utility btn-outline {
+  @apply border border-white/20 text-white hover:bg-white hover:text-black;
+}
+@utility card {
+  @apply rounded-2xl border border-white/10 bg-white/[.04] p-5;
 }
 
 /* keyframes referenced by classes above */
@@ -54,11 +60,4 @@ h1, h2, h3 { line-height: var(--marty-leading); letter-spacing: -0.01em }
 @keyframes sweep { 0% { transform: translateX(-100%) } 100% { transform: translateX(100%) } }
 
 /* === FORCE PURE BLACK BACKGROUND SITE-WIDE === */
-html, body, main, section {
-  background-color: #000 !important;
-}
-
-@layer components{.btn{@apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition}.btn-primary{@apply bg-white text-black hover:bg-white/90}.btn-outline{@apply border border-white/20 text-white hover:bg-white hover:text-black}.card{@apply rounded-2xl border border-white/10 bg-white/[.04] p-5}}
-
-/* FORCE PURE BLACK SITE-WIDE */
-html,body,main,section{background:#000!important;color:#fff}
+html, body, main, section { background-color:#000 !important; color:#fff; }

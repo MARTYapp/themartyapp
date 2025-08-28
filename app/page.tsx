@@ -73,6 +73,7 @@ export default function Home() {
       </section>
 
       {/* === FUND CTA === */}
+      <section id="fund" className="py-20 px-6 bg-black">
         <div className="mx-auto max-w-3xl text-center">
           <h3 className="text-3xl font-bold mb-4 tracking-tighter">Fund the Founder</h3>
           <p className="text-white/80 max-w-xl mx-auto">
