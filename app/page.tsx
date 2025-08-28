@@ -1,4 +1,3 @@
-// app/page.tsx
 import Image from "next/image";
 import Link from "next/link";
 import WhyMarty from "@/components/WhyMarty";
@@ -11,9 +10,9 @@ export default function Home() {
       <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
         {/* BG layers */}
         <div className="absolute inset-0 sm:bg-hero-texture bg-hero-texture-sm" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-transparent to-black/80" />
-        <div className="noise opacity-30" />
-        <div className="sweep hidden sm:block" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />
+        <div className="noise" />
+        <div className="sweep" aria-hidden />
 
         {/* Content */}
         <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center">
@@ -49,7 +48,6 @@ export default function Home() {
       </section>
 
       <WhyMarty />
-
       <FAQ compact />
 
       {/* === JOURNAL DEMO === */}
@@ -101,6 +99,6 @@ export default function Home() {
       <footer className="border-t border-white/10 text-center text-xs text-white/60 py-8">
         MARTY ≠ THERAPY — Not a therapist. Not a vibe app. Just MARTY.
       </footer>
- in>
+    </main>
   );
 }
