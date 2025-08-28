@@ -7,10 +7,8 @@ export default function Home() {
   return (
     <main className="min-h-screen w-full bg-marty-bg text-white">
       {/* === HERO === */}
-      <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 overflow-hidden bg-black">
         {/* BG layers */}
-        <div className="absolute inset-0 sm:bg-hero-texture bg-hero-texture-sm" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />
         <div className="noise" />
         <div className="sweep" aria-hidden />
 
@@ -75,7 +73,6 @@ export default function Home() {
       </section>
 
       {/* === FUND CTA === */}
-      <section id="fund" className="relative py-20 px-6 bg-gradient-to-b from-marty-bg to-black">
         <div className="mx-auto max-w-3xl text-center">
           <h3 className="text-3xl font-bold mb-4 tracking-tighter">Fund the Founder</h3>
           <p className="text-white/80 max-w-xl mx-auto">
