@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import WhyMarty from "@/components/WhyMarty";
+import WhyMarty from "@/components/WhyMartyGrid";
 import FAQ from "@/components/FAQ";
 
 export default function Home() {
