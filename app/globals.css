@@ -171,3 +171,12 @@ code, kbd, samp {
     linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 50px 50px, 50px 50px;
 }
+
+/* Global type scale */
+html {
+  font-size: 18px; /* bump from Tailwind’s default 16px */
+}
+
+body {
+  line-height: 1.6; /* improve readability */
+}
