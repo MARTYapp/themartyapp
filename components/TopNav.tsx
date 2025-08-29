@@ -7,8 +7,8 @@ export default function TopNav() {
   return (
     <header className="sticky top-0 z-50 w-full bg-black/80 backdrop-blur border-b border-white/10">
       <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="text-sm font-black tracking-widest glitch-text">
-          THE MARTY APP
+        <Link href="/" title="Site built by Eric Adler" className="text-sm font-black tracking-widest glitch-text">
+        the MARTY app
         </Link>
 
         <div className="flex items-center gap-6 text-xs font-semibold uppercase tracking-wider">
@@ -25,7 +25,7 @@ export default function TopNav() {
             Fund
           </Link>
         </div>
-      </nav>
+  </nav>
     </header>
   );
 }

@@ -37,6 +37,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="min-h-screen bg-black text-white font-sans tracking-tight selection:bg-white selection:text-black">
           <TopNav />
           <main className="relative">{children}</main>
+          <footer className="py-6 text-center text-xs text-white/40">
+            Built by Eric Adler — the MARTY app 
+          </footer>
           <div
             aria-hidden
             className="pointer-events-none fixed inset-0 -z-10 opacity-50 grid-overlay"
