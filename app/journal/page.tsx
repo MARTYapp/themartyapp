@@ -66,14 +66,10 @@ export default function JournalPage() {
       {/* Cinematic grid + sweep background */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-60"
-        style={{
-          background:
-            "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-          backgroundSize: "40px 40px, 40px 40px",
-          maskImage:
-            "radial-gradient(1000px_400px_at_10%_-10%, black, transparent 70%), radial-gradient(800px_600px_at_110%_120%, black, transparent 60%)",
-        }}
+        className="pointer-events-none absolute inset-0 opacity-60
+                   [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)]
+                   [background-size:40px_40px,40px_40px]
+                   [mask-image:radial-gradient(1000px_400px_at_10%_-10%,black,transparent_70%),radial-gradient(800px_600px_at_110%_120%,black,transparent_60%)]"
       />
 
       {/* Top Bar */}

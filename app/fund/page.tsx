@@ -4,12 +4,7 @@ export default function FundPage() {
       {/* Cinematic grid background */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          background:
-            "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-          backgroundSize: "50px 50px, 50px 50px",
-        }}
+        className="pointer-events-none absolute inset-0 opacity-40 bg-cinematic-grid"
       />
       <div className="noise" aria-hidden />
 

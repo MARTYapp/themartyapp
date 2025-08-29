@@ -27,7 +27,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="bg-black">
       <head>
         <link rel="icon" href="/branding/favicon.ico" sizes="any" />
-        <meta name="theme-color" content="#000000" />
+        {/* Theme colors for supported browsers */}
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="msapplication-navbutton-color" content="#000000" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="color-scheme" content="light dark" />
       </head>
       <body className="bg-black text-white antialiased">
         <div className="min-h-screen bg-black text-white font-sans tracking-tight selection:bg-white selection:text-black">
@@ -35,12 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="relative">{children}</main>
           <div
             aria-hidden
-            className="pointer-events-none fixed inset-0 -z-10 opacity-50"
-            style={{
-              background:
-                "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-              backgroundSize: "40px 40px, 40px 40px",
-            }}
+            className="pointer-events-none fixed inset-0 -z-10 opacity-50 grid-overlay"
           />
         </div>
       </body>
