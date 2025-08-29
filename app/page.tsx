@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import WhyMarty from "@/components/WhyMartySection";
+import WhyMARTY from "@/components/WhyMARTYSection";
 import FAQ from "@/components/FAQ";
 
 export default function Home() {
@@ -38,8 +38,8 @@ export default function Home() {
 
           {/* CTAs */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link href="#journal" className="btn btn-primary">Try Marty Now</Link>
-            <Link href="#fund" className="btn btn-outline">Fund Marty</Link>
+            <Link href="#journal" className="btn btn-primary">Try MARTY Now</Link>
+            <Link href="#fund" className="btn btn-outline">Fund MARTY</Link>
             <Link href="#why-marty" className="btn btn-outline">Why MARTY</Link>
           </div>
 
@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </section>
 
-      <WhyMarty />
+      <WhyMARTY />
       <FAQ compact />
 
       {/* === JOURNAL DEMO === */}

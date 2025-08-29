@@ -1,4 +1,4 @@
-// components/WhyMartySection.tsx
+// components/WhyMARTYSection.tsx
 "use client";
 
 import Image from "next/image";
@@ -84,7 +84,7 @@ export function ValuePanel() {
 }
 
 // ---------- Default export (used on homepage) ----------
-export default function WhyMartySection() {
+export default function WhyMARTYSection() {
   return (
     <section id="why-marty" className="w-full bg-black text-white" role="region" aria-labelledby="why-marty-heading">
       <div className="mx-auto max-w-5xl px-6 py-16">
