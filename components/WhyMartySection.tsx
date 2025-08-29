@@ -38,7 +38,7 @@ const makeFadeUp = (reduce: boolean) => (i = 0) =>
       };
 
 type GlitchAnim =
-  | {}
+  | Record<string, never>
   | {
       animate: { x: number[]; y: number[]; filter: string[] };
       transition: { duration: number; repeat: number; repeatType: "mirror"; ease: "easeInOut" };
@@ -255,3 +255,6 @@ function Card({
     </div>
   );
 }
+
+// app/components/safe-motion.tsx
+export { motion, AnimatePresence, useReducedMotion } from "framer-motion";
