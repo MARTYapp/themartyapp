@@ -15,6 +15,9 @@ export default function TopNav() {
           <a href="#why-marty" className="upper-label hover:text-white">Why</a>
           <a href="#faq" className="upper-label hover:text-white">FAQ</a>
           <a href="#journal" className="upper-label hover:text-white">Journal</a>
+          <Link href="/investors" className="upper-label hover:text-white">
+            Investors
+          </Link>
           <Link
             href="/fund"
             className="btn-square ml-2"
