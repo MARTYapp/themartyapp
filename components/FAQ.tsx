@@ -1,10 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export type FAQItem = {
-  id: string; // stable id for deep-linking
+  id: string;
   q: string;
   a: string;
 };
@@ -42,214 +41,72 @@ const DEFAULT_FAQ: FAQItem[] = [
   },
 ];
 
-function useHashOpen() {
+function useHash(): string | null {
   const [hash, setHash] = useState<string | null>(null);
   useEffect(() => {
-    const onHash = () => setHash(window.location.hash.replace(/^#/, "") || null);
-    onHash();
-    window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
+    const update = () => setHash(window.location.hash.replace(/^#/, "") || null);
+    update();
+    window.addEventListener("hashchange", update);
+    return () => window.removeEventListener("hashchange", update);
   }, []);
   return hash;
 }
 
 export default function FAQ({ compact = false, items = DEFAULT_FAQ }: { compact?: boolean; items?: FAQItem[] }) {
-  const hash = useHashOpen();
-  const reduce = useReducedMotion();
-
-  const [query, setQuery] = useState("");
-  const [openSignal, setOpenSignal] = useState(0);
-  const [closeSignal, setCloseSignal] = useState(0);
-
-  const filteredItems = useMemo(() => {
-    if (!query.trim()) return items;
-    const q = query.trim().toLowerCase();
-    return items.filter((it) => it.q.toLowerCase().includes(q) || it.a.toLowerCase().includes(q));
-  }, [items, query]);
-
-  const highlight = useCallback((text: string) => {
-    const q = query.trim();
-    if (!q) return text;
-    const idx = text.toLowerCase().indexOf(q.toLowerCase());
-    if (idx === -1) return text;
-    const before = text.slice(0, idx);
-    const match = text.slice(idx, idx + q.length);
-    const after = text.slice(idx + q.length);
-    return (
-      <>
-        {before}
-        <mark className="bg-white text-black px-0.5 rounded-sm">{match}</mark>
-        {after}
-      </>
-    );
-  }, [query]);
-
-  // Precompute JSON-LD for SEO
-  const jsonLd = useMemo(() => ({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: items.map((it) => ({
-      '@type': 'Question',
-      name: it.q,
-      acceptedAnswer: { '@type': 'Answer', text: it.a },
-    })),
-  }), [items]);
-
-  const gridClasses = compact
+  const hash = useHash();
+  const grid = compact
     ? "grid grid-cols-1 gap-3"
     : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6";
 
   return (
     <section id="faq" className="relative w-full bg-black text-white border-t border-white/10" aria-labelledby="faq-heading">
-      {/* optional ambient */}
-      <div className="pointer-events-none absolute inset-0 [background:radial-gradient(1200px_600px_at_110%_10%,rgba(255,255,255,0.05),transparent_60%)]" aria-hidden />
-
       <div className="relative mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <h2 id="faq-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-          Frequently Asked — Answered Like a Human
-        </h2>
-        <p className="mt-3 max-w-2xl text-white/70">
-          No corporate fluff. If you don’t see your question, DM and we’ll add it.
-        </p>
+        <header className="max-w-3xl">
+          <h2 id="faq-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            Frequently Asked
+          </h2>
+          <p className="mt-3 text-base sm:text-lg text-white/70">
+            No corporate fluff. If you don’t see your question, DM and we’ll add it.
+          </p>
+        </header>
 
-        {/* Controls: Search + Expand/Collapse */}
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <label className="relative block w-full sm:max-w-md">
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search questions…"
-              className="w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-white placeholder:text-white/40 outline-none focus:border-white/30"
-            />
-            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/50">⌘K</span>
-          </label>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setOpenSignal((n) => n + 1)}
-              className="rounded-lg border border-white/20 bg-white/5 px-3 py-2 text-xs uppercase tracking-widest text-white/80 hover:bg-white/10"
-            >
-              Expand all
-            </button>
-            <button
-              onClick={() => setCloseSignal((n) => n + 1)}
-              className="rounded-lg border border-white/20 bg-white/5 px-3 py-2 text-xs uppercase tracking-widest text-white/80 hover:bg-white/10"
-            >
-              Collapse all
-            </button>
-          </div>
-        </div>
-
-        <div className={`mt-10 ${gridClasses}`}>
-          {filteredItems.map((it, idx) => (
-            <FAQCard
+        <div className={`mt-10 ${grid}`}>
+          {items.map((it) => (
+            <details
               key={it.id}
-              item={it}
-              defaultOpen={hash === it.id}
-              reduce={reduce}
-              index={idx}
-              openSignal={openSignal}
-              closeSignal={closeSignal}
-              highlightFn={highlight}
-            />
+              id={it.id}
+              open={hash === it.id}
+              className="group rounded-2xl border border-white/12 bg-white/[0.035] p-0 backdrop-blur-[1px] transition-colors hover:bg-white/[0.05] focus-within:bg-white/[0.05]"
+            >
+              <summary
+                className="flex w-full cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-4 outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+              >
+                <span className="text-base sm:text-lg font-semibold leading-snug text-white/95">
+                  {it.q}
+                </span>
+                <Chevron className="h-5 w-5 text-white/60 transition-transform group-open:rotate-45" />
+              </summary>
+
+              <div className="px-5 pb-5">
+                <div className="max-w-prose text-[0.98rem] leading-7 text-white/80">
+                  {it.a}
+                </div>
+                <div className="mt-4 text-[11px] uppercase tracking-widest text-white/40">
+                  <a href={`#${it.id}`} className="hover:text-white/70">Link</a>
+                </div>
+              </div>
+            </details>
           ))}
         </div>
-
-        {/* SEO JSON-LD */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </div>
     </section>
   );
 }
 
-function CopyRow({ anchor }: { anchor: string }) {
-  const [copied, setCopied] = useState(false);
-  const copy = async () => {
-    try {
-      const url = typeof window !== 'undefined' ? window.location.origin + window.location.pathname + anchor : anchor;
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
-    } catch {}
-  };
+function Chevron({ className = "" }: { className?: string }) {
   return (
-    <div className="mt-4 flex items-center justify-between text-[11px] uppercase tracking-widest text-white/40">
-      <a href={anchor} className="hover:text-white/70">Link</a>
-      <button onClick={copy} className="rounded px-2 py-1 hover:text-white/70">
-        {copied ? 'Copied' : 'Copy link'}
-      </button>
-    </div>
-  );
-}
-
-function FAQCard({ item, defaultOpen = false, reduce, index, openSignal, closeSignal, highlightFn }: { item: FAQItem; defaultOpen?: boolean; reduce: boolean; index: number; openSignal: number; closeSignal: number; highlightFn: (text: string) => React.ReactNode; }) {
-  const [open, setOpen] = useState<boolean>(defaultOpen);
-  useEffect(() => {
-    if (defaultOpen) setOpen(true);
-  }, [defaultOpen]);
-
-  useEffect(() => {
-    if (openSignal) setOpen(true);
-  }, [openSignal]);
-  useEffect(() => {
-    if (closeSignal) setOpen(false);
-  }, [closeSignal]);
-
-  // Smooth height animation
-  const variants = reduce
-    ? { collapsed: { opacity: 0 }, expanded: { opacity: 1 } }
-    : {
-        collapsed: { opacity: 0, height: 0 },
-        expanded: { opacity: 1, height: 'auto', transition: { duration: 0.28, ease: 'easeOut' } },
-      };
-
-  const anchor = `#${item.id}`;
-
-  return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/12 bg-white/[0.03] hover:bg-white/[0.05] transition">
-      <button
-        id={item.id}
-        aria-controls={`${item.id}-panel`}
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-start justify-between gap-4 px-5 py-5 text-left"
-      >
-        <span className="text-base font-semibold leading-snug sm:text-lg">
-          {highlightFn(item.q)}
-        </span>
-        <span
-          className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-md border border-white/20 bg-white/5 text-xs text-white/70 group-hover:text-white/90"
-          aria-hidden="true"
-        >
-          <motion.span
-            initial={false}
-            animate={{ rotate: open ? 45 : 0 }}
-            transition={{ duration: 0.18 }}
-          >
-            +
-          </motion.span>
-        </span>
-      </button>
-
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="content"
-            id={`${item.id}-panel`}
-            role="region"
-            aria-labelledby={item.id}
-            initial="collapsed"
-            animate="expanded"
-            exit="collapsed"
-            variants={variants}
-            className="px-5 pb-5"
-          >
-            <div className="text-white/75 leading-relaxed">
-              {highlightFn(item.a)}
-            </div>
-            <CopyRow anchor={anchor} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+      <path d="M6 9l6 6 6-6" />
+    </svg>
   );
 }

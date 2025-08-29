@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type Msg = { id: number; from: "user" | "marty"; text: string };
 
@@ -9,6 +9,7 @@ export default function JournalPage() {
     { id: 1, from: "marty", text: "Hey. You made it. This isn’t therapy — it’s us." },
   ]);
   const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
   const send = () => {
@@ -20,6 +21,7 @@ export default function JournalPage() {
     setInput("");
 
     // fake MARTY reflection after 1.2s
+    setTyping(true);
     setTimeout(() => {
       const reply: Msg = {
         id: Date.now() + 1,
@@ -27,6 +29,7 @@ export default function JournalPage() {
         text: reflect(clean),
       };
       setMessages((prev) => [...prev, reply]);
+      setTyping(false);
     }, 1200);
   };
 
@@ -52,6 +55,15 @@ export default function JournalPage() {
       send();
     }
   };
+
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  const autoResize = () => {
+    const t = inputRef.current;
+    if (!t) return;
+    t.style.height = '0px';
+    t.style.height = Math.min(160, t.scrollHeight) + 'px';
+  };
+  useLayoutEffect(() => { autoResize(); }, [input]);
 
   return (
     <main className="relative min-h-[100svh] bg-black text-white">
@@ -85,6 +97,9 @@ export default function JournalPage() {
 
       {/* Chat */}
       <section className="mx-auto flex min-h-[calc(100svh-160px)] max-w-4xl flex-col px-5 py-6">
+        <div className="sr-only" aria-live="polite" aria-atomic="false">
+          {messages[messages.length - 1]?.text}
+        </div>
         {/* Stream */}
         <div
           ref={scrollerRef}
@@ -96,24 +111,33 @@ export default function JournalPage() {
                 {m.text}
               </Bubble>
             ))}
+            {typing && (
+              <div className="flex justify-start">
+                <div className="rounded-xl border border-white/15 bg-white/[0.04] text-white/70 px-4 py-2 text-xs">
+                  MARTY is typing…
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Composer */}
         <div className="sticky bottom-0 z-10 mt-2 rounded-2xl border border-white/10 bg-white/[0.03] p-2">
           <div className="flex items-center gap-2">
-            <input
+            <textarea
+              ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
+                if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
                   send();
                 }
-                onKeyDown(e);
+                onKeyDown(e as any);
               }}
-              placeholder="Say it like it is…"
-              className="flex-1 rounded-xl bg-black/60 px-4 py-3 text-white outline-none placeholder:text-white/40 focus:ring-1 focus:ring-white/20"
+              rows={1}
+              placeholder="Say it like it is… (Shift+Enter for newline)"
+              className="flex-1 resize-none rounded-xl bg-black/60 px-4 py-3 text-white outline-none placeholder:text-white/40 focus:ring-1 focus:ring-white/20"
             />
             <button
               onClick={send}
@@ -140,7 +164,7 @@ function Bubble({ from, children }: { from: "user" | "marty"; children: React.Re
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
       <div
         className={[
-          "max-w-[80%] rounded-xl border px-4 py-3 text-sm leading-relaxed shadow-sm",
+          "max-w-[80%] rounded-xl border px-4 py-3 text-[0.95rem] leading-7 shadow-sm",
           isUser
             ? "border-white bg-white text-black rounded-tr-sm"
             : "border-white/15 bg-white/[0.04] text-white/90 rounded-tl-sm",

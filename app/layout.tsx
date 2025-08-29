@@ -25,6 +25,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="bg-black">
+      <head>
+        <link rel="icon" href="/branding/favicon.ico" sizes="any" />
+        <meta name="theme-color" content="#000000" />
+      </head>
       <body className="bg-black text-white antialiased">
         <div className="min-h-screen bg-black text-white font-sans tracking-tight selection:bg-white selection:text-black">
           <TopNav />
