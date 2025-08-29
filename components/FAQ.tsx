@@ -22,7 +22,7 @@ const DEFAULT_FAQ: FAQItem[] = [
   {
     id: "who-is-it-for",
     q: "Who is it for?",
-    a: "The ones who fall through the cracks: avoiders, overthinkers, the executive‑dysfunction crew, the Quiet Bros™. If pastel wellness apps never stuck for you, MARTY’s for you.",
+    a: "For the ones who fall through the cracks — the avoiders, the overthinkers, the ED crew (executive-dysfunction). If pastel wellness apps never stuck, MARTY will."
   },
   {
     id: "privacy",
