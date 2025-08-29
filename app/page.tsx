@@ -5,48 +5,51 @@ import FAQ from "@/components/FAQ";
 
 export default function Home() {
   return (
-    <><main className="min-h-screen w-full bg-marty-bg text-white" {...} /><section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 overflow-hidden bg-black">
-      {/* BG layers */}
-      <div className="noise" aria-hidden />
-      <div className="sweep" aria-hidden />
+    <main className="min-h-screen w-full bg-marty-bg text-white">
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 overflow-hidden bg-black">
+        {/* BG layers */}
+        <div className="noise" aria-hidden />
+        <div className="sweep" aria-hidden />
 
-      {/* SEO H1 (screen-reader only) */}
-      <h1 className="sr-only">The MARTY App — MARTY ≠ THERAPY</h1>
+        {/* SEO H1 (screen-reader only) */}
+        <h1 className="sr-only">The MARTY App — MARTY ≠ THERAPY</h1>
 
-      {/* Content */}
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center">
-        {/* Primary logo */}
-        <Image
-          src="/branding/logo-primary.png"
-          alt="The MARTY App primary logo"
-          width={220}
-          height={220}
-          priority
-          className="mb-6" />
+        {/* Content */}
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center">
+          {/* Primary logo */}
+          <Image
+            src="/branding/logo-primary.png"
+            alt="The MARTY App primary logo"
+            width={220}
+            height={220}
+            priority
+            className="mb-6" />
 
-        {/* One-line wordmark: MARTY ≠ THERAPY */}
-        <Image
-          // NOTE: if your filename includes the combining slash character, this UTF-8 path should still work.
-          // If it 404s on deploy, rename the asset to a safe slug and update this path.
-          src="/branding/Logo-MARTYnotTHERAPY.png"
-          alt="MARTY ≠ THERAPY wordmark"
-          width={1200}
-          height={220}
-          priority
-          className="w-full max-w-[980px] h-auto drop-shadow-glow" />
+          {/* One-line wordmark: MARTY ≠ THERAPY */}
+          <Image
+            // NOTE: if your filename includes the combining slash character, this UTF-8 path should still work.
+            // If it 404s on deploy, rename the asset to a safe slug and update this path.
+            src="/branding/Logo-MARTYnotTHERAPY.png"
+            alt="MARTY ≠ THERAPY wordmark"
+            width={1200}
+            height={220}
+            priority
+            className="w-full max-w-[980px] h-auto drop-shadow-glow" />
 
-        {/* CTAs */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Link href="#journal" className="btn btn-primary">Try Marty Now</Link>
-          <Link href="#fund" className="btn btn-outline">Fund Marty</Link>
+          {/* CTAs */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link href="#journal" className="btn btn-primary">Try Marty Now</Link>
+            <Link href="#fund" className="btn btn-outline">Fund Marty</Link>
+          </div>
+
+          {/* Bottom line */}
+          <div className="mt-10 text-sm sm:text-base text-white/80">
+            Quiet tech for loud minds
+          </div>
         </div>
-
-        {/* Bottom line */}
-        <div className="mt-10 text-sm sm:text-base text-white/80">
-          Quiet tech for loud minds
-        </div>
-      </div>
-    </section><WhyMarty /><FAQ compact /></>
+      </section>
+      <WhyMarty />
+      <FAQ compact />
 
       {/* === JOURNAL DEMO === */}
       <section id="journal" className="relative py-20 px-6 bg-black">
@@ -95,8 +98,10 @@ export default function Home() {
         </div>
       </section>
 
-       {/* FOOTER */}
-       <footer className="border-t border-white/10 text-center text-xs text-white/60 py-8">
-       MARTY ≠ THERAPY — Not a therapist. Not a vibe app. Just MARTY.
-     </footer>
+      {/* FOOTER */}
+      <footer className="border-t border-white/10 text-center text-xs text-white/60 py-8">
+        MARTY ≠ THERAPY — Not a therapist. Not a vibe app. Just MARTY.
+      </footer>
+    </main>
+  );
 }
