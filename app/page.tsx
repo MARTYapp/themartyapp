@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import WhyMARTY from "@/components/WhyMARTYSection";
+import WhyMartySection from "@/components/WhyMartySection";
 import FAQ from "@/components/FAQ";
 
 export default function Home() {
@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </section>
 
-      <WhyMARTY />
+      <WhyMartySection />
       <FAQ compact />
 
       {/* === JOURNAL DEMO === */}
