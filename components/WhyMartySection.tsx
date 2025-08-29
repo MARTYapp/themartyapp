@@ -2,6 +2,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "./safe-motion";
+import type { MotionProps } from "framer-motion";
 type Item = { label: string };
 
 const MARTY_POINTS: Item[] = [
@@ -29,7 +30,7 @@ const WELLNESS_POINTS: Item[] = [
 ];
 
 // Animation helpers
-const makeFadeUp = (reduce: boolean) => (i = 0) =>
+const makeFadeUp = (reduce: boolean) => (i = 0): MotionProps =>
   reduce
     ? { initial: { opacity: 0 }, animate: { opacity: 1, transition: { duration: 0.25 } } }
     : {
@@ -45,10 +46,10 @@ type GlitchAnim =
     };
 
 export default function WhyMartySection() {
-  const reduce = useReducedMotion();
-  const fadeUp = makeFadeUp(reduce);
+  const prefersReduced = (useReducedMotion() ?? false) as boolean;
+  const fadeUp = makeFadeUp(prefersReduced);
 
-  const glitchAnim: GlitchAnim = reduce
+  const glitchAnim: GlitchAnim = prefersReduced
     ? {}
     : {
         animate: {
@@ -70,8 +71,8 @@ export default function WhyMartySection() {
             "radial-gradient(1200px 600px at 10% -10%, rgba(255,255,255,0.06), transparent 60%), radial-gradient(900px 500px at 110% 120%, rgba(0,153,255,0.08), transparent 60%)",
         }}
         initial={false}
-        animate={reduce ? undefined : { y: [0, -6, 0] }}
-        transition={reduce ? undefined : { duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        animate={prefersReduced ? undefined : { y: [0, -6, 0] }}
+        transition={prefersReduced ? undefined : { duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
       <div className="pointer-events-none absolute inset-0 bg-[url('/noise.png')] opacity-[0.06]" aria-hidden />
 
@@ -164,8 +165,8 @@ export default function WhyMartySection() {
 /* ---------- Subcomponents ---------- */
 
 function ManifestoLine({ children, i = 0 }: { children: React.ReactNode; i?: number }) {
-  const reduce = useReducedMotion();
-  const variants = reduce
+  const prefersReduced = (useReducedMotion() ?? false) as boolean;
+  const variants: MotionProps = prefersReduced
     ? { initial: { opacity: 0 }, animate: { opacity: 1, transition: { duration: 0.25 } } }
     : { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0, transition: { delay: 0.05 * i, duration: 0.4, ease: "easeOut" } } };
   return (
