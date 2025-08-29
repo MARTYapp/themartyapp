@@ -26,8 +26,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="bg-black">
       <body className="bg-black text-white antialiased">
-        <TopNav />
-        {children}
+        <div className="min-h-screen bg-black text-white font-sans tracking-tight selection:bg-white selection:text-black">
+          <TopNav />
+          <main className="relative">{children}</main>
+          <div
+            aria-hidden
+            className="pointer-events-none fixed inset-0 -z-10 opacity-50"
+            style={{
+              background:
+                "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
+              backgroundSize: "40px 40px, 40px 40px",
+            }}
+          />
+        </div>
       </body>
     </html>
   );

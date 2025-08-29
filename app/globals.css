@@ -60,4 +60,87 @@ h1, h2, h3 { line-height: var(--marty-leading); letter-spacing: -0.01em }
 @keyframes sweep { 0% { transform: translateX(-100%) } 100% { transform: translateX(100%) } }
 
 /* === FORCE PURE BLACK BACKGROUND SITE-WIDE === */
-html, body, main, section { background-color:#000 !important; color:#fff; }
+
+
+html, body, main, section {
+  background: linear-gradient(to bottom, #000428, #000) !important;
+  color: #fff;
+}
+
+/* Section cinematic divider overlay */
+section {
+  position: relative;
+  z-index: 1;
+}
+section::before,
+section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  z-index: -1;
+}
+section::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent);
+}
+section::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+}
+
+/* === MARTY MASC / CINEMATIC VIBE === */
+
+/* Brutalist monospace accents for small text */
+code, kbd, samp {
+  font-family: "Menlo", "Consolas", monospace;
+  background: rgba(255,255,255,0.05);
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  letter-spacing: 0.02em;
+}
+
+/* Strong uppercase tracking for nav and mini labels */
+.upper-label {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* Cinematic glitch animation (can be applied via class) */
+@keyframes glitch {
+  0% { text-shadow: 2px 0 red, -2px 0 cyan; }
+  20% { text-shadow: -2px 0 red, 2px 0 cyan; }
+  40% { text-shadow: 2px 0 red, -2px 0 cyan; }
+  60% { text-shadow: -2px 0 red, 2px 0 cyan; }
+  80% { text-shadow: 2px 0 red, -2px 0 cyan; }
+  100% { text-shadow: none; }
+}
+.glitch-text {
+  animation: glitch 1.8s infinite;
+}
+
+/* Masculine buttons with hard edge */
+.btn-square {
+  @apply inline-flex items-center justify-center px-5 py-3 font-bold uppercase tracking-widest transition;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+}
+.btn-square:hover {
+  background: white;
+  color: black;
+}
+
+/* Subtle grid background (used in layout) */
+.marty-grid-bg {
+  background:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}

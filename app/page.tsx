@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import WhyMarty from "@/components/WhyMartyGrid";
+import WhyMarty from "@/components/WhyMartySection";
 import FAQ from "@/components/FAQ";
 
 export default function Home() {
@@ -40,6 +40,7 @@ export default function Home() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link href="#journal" className="btn btn-primary">Try Marty Now</Link>
             <Link href="#fund" className="btn btn-outline">Fund Marty</Link>
+            <Link href="#why-marty" className="btn btn-outline">Why MARTY</Link>
           </div>
 
           {/* Bottom line */}
@@ -48,6 +49,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <WhyMarty />
       <FAQ compact />
 
