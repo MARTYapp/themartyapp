@@ -1,12 +1,7 @@
 // app/components/WhyMartySection.tsx
-// Drop into your repo, then <WhyMartySection /> wherever you want this block.
-// Requires Tailwind. Optional (but recommended): `npm i framer-motion`
-//
-// Brand copy is embedded exactly as requested.
-
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "@/components/safe-motion";
 
 type Item = { label: string };
 
@@ -43,21 +38,28 @@ const makeFadeUp = (reduce: boolean) => (i = 0) =>
         animate: { opacity: 1, y: 0, transition: { delay: 0.05 * i, duration: 0.4, ease: "easeOut" } },
       };
 
+type GlitchAnim =
+  | {}
+  | {
+      animate: { x: number[]; y: number[]; filter: string[] };
+      transition: { duration: number; repeat: number; repeatType: "mirror"; ease: "easeInOut" };
+    };
+
 export default function WhyMartySection() {
   const reduce = useReducedMotion();
   const fadeUp = makeFadeUp(reduce);
-  // subtle glitch/pulse for the headline (disabled if reduced motion)
-  const glitchAnim = reduce
+
+  const glitchAnim: GlitchAnim = reduce
     ? {}
     : {
         animate: {
-          // tiny jitter + brightness pulse
           x: [0, 0.2, -0.2, 0],
           y: [0, -0.2, 0.2, 0],
-          filter: ["brightness(1)", "brightness(1.15)", "brightness(1)", "brightness(1)"] as any,
+          filter: ["brightness(1)", "brightness(1.15)", "brightness(1)", "brightness(1)"],
         },
         transition: { duration: 2.2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" },
-      } as const;
+      };
+
   return (
     <section id="why-marty" className="relative w-full bg-black text-white" role="region" aria-labelledby="why-marty-heading">
       {/* cinematic background noise / sweeps */}
@@ -91,11 +93,9 @@ export default function WhyMartySection() {
           </motion.span>
         </motion.h2>
 
-        {/* Manifesto Bridge (innovative layout) */}
+        {/* Manifesto Bridge */}
         <motion.div
-          role="article"
-          initial="initial"
-          animate="animate"
+          {...fadeUp(2)}
           className="relative mx-auto mt-10 grid max-w-5xl grid-cols-1 items-stretch gap-6 sm:mt-12 md:grid-cols-12"
         >
           {/* Left bar / label */}
@@ -108,7 +108,7 @@ export default function WhyMartySection() {
             </div>
           </div>
 
-          {/* Copy block with staggered emphasis */}
+          {/* Copy block */}
           <div className="md:col-span-9">
             <motion.div
               role="article"

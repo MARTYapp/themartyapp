@@ -10,7 +10,9 @@ export default function JournalPage() {
   ]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
+
   const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   const send = () => {
     const clean = input.trim();
@@ -46,24 +48,18 @@ export default function JournalPage() {
     const el = scrollerRef.current;
     if (!el) return;
     el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-  }, [messages.length]);
+  }, [messages.length, typing]);
 
-  // Keyboard shortcut: Cmd/Ctrl+Enter sends
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
-      e.preventDefault();
-      send();
-    }
-  };
-
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  // Auto-resize the textarea
   const autoResize = () => {
     const t = inputRef.current;
     if (!t) return;
-    t.style.height = '0px';
-    t.style.height = Math.min(160, t.scrollHeight) + 'px';
+    t.style.height = "0px";
+    t.style.height = Math.min(160, t.scrollHeight) + "px";
   };
-  useLayoutEffect(() => { autoResize(); }, [input]);
+  useLayoutEffect(() => {
+    autoResize();
+  }, [input]);
 
   return (
     <main className="relative min-h-[100svh] bg-black text-white">
@@ -97,9 +93,11 @@ export default function JournalPage() {
 
       {/* Chat */}
       <section className="mx-auto flex min-h-[calc(100svh-160px)] max-w-4xl flex-col px-5 py-6">
+        {/* Screen-reader live region */}
         <div className="sr-only" aria-live="polite" aria-atomic="false">
           {messages[messages.length - 1]?.text}
         </div>
+
         {/* Stream */}
         <div
           ref={scrollerRef}
@@ -123,17 +121,23 @@ export default function JournalPage() {
 
         {/* Composer */}
         <div className="sticky bottom-0 z-10 mt-2 rounded-2xl border border-white/10 bg-white/[0.03] p-2">
-          <div className="flex items-center gap-2">
+          <div className="flex items-end gap-2">
             <textarea
               ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
+                // Enter sends (unless Shift held)
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  send();
+                  return;
+                }
+                // Cmd/Ctrl + Enter also sends
+                if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
                   e.preventDefault();
                   send();
                 }
-                onKeyDown(e as any);
               }}
               rows={1}
               placeholder="Say it like it is… (Shift+Enter for newline)"
@@ -148,9 +152,9 @@ export default function JournalPage() {
           </div>
           {/* Quick actions */}
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <Quick onClick={() => setInput((v) => (v ? v + " 10-min timer" : "10-min timer"))}>10‑min timer</Quick>
+            <Quick onClick={() => setInput((v) => (v ? v + " 10-min timer" : "10-min timer"))}>10-min timer</Quick>
             <Quick onClick={() => setInput((v) => (v ? v + " opposite action" : "opposite action"))}>Opposite action</Quick>
-            <Quick onClick={() => setInput((v) => (v ? v + " breathe 4-4-4-4" : "breathe 4‑4‑4‑4"))}>4‑count breath</Quick>
+            <Quick onClick={() => setInput((v) => (v ? v + " breathe 4-4-4-4" : "breathe 4-4-4-4"))}>4-count breath</Quick>
           </div>
         </div>
       </section>
