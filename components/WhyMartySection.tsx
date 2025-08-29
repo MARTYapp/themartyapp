@@ -1,8 +1,7 @@
 // app/components/WhyMartySection.tsx
 "use client";
 
-import { motion, useReducedMotion } from "@/components/safe-motion";
-
+import { motion, useReducedMotion } from "./safe-motion";
 type Item = { label: string };
 
 const MARTY_POINTS: Item[] = [
