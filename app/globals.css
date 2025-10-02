@@ -1,12 +1,11 @@
 @import "tailwindcss";
 
-/* === Root colors === */
+/* Your actual CSS content */
 :root {
   --background: #000;
   --foreground: #fff;
 }
 
-/* === Global body styles === */
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -15,63 +14,8 @@ body {
   line-height: 1.6;
 }
 
-/* === Minimal cinematic helpers (safe for Turbopack) === */
 .sweep, .noise {
   display: none;
 }
 
-/* === Buttons and cards === */
-.btn, .btn-square, .card {
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.25rem;
-}
-
-/* === Typography tweaks === */
-h1, h2, h3 {
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-}
-
-/* === Utility classes for future cinematic expansions === */
-.upper-label {
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-weight: 700;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-/* === MARTY Cinematic Brand Utilities === */
-
-/* 1. Gradient background helper */
-.bg-site-gradient-auto {
-  /* Cinematic purple/blue to deep black gradient */
-  background-image: linear-gradient(120deg, #1b1e3c 0%, #3a2e5b 35%, #14121a 100%);
-}
-
-/* 2. Noise texture overlay */
-.bg-noise {
-  /* Subtle film grain noise overlay, low opacity, pointer-events:none so it's overlay-safe */
-  pointer-events: none;
-  opacity: 0.08;
-  background-image: url("data:image/svg+xml;utf8,<svg width='120' height='120' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'><filter id='noiseFilter'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/></filter><rect width='120' height='120' filter='url(%23noiseFilter)'/></svg>");
-  background-repeat: repeat;
-  background-size: 220px 220px;
-}
-
-/* 3. Thin custom scrollbar utility (compatible with Tailwind) */
-.scrollbar-thin {
-  scrollbar-width: thin;
-  scrollbar-color: #3a2e5b #14121a;
-}
-.scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background: #3a2e5b;
-  border-radius: 4px;
-}
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: #14121a;
-}
+/* etc... */
