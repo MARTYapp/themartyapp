@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "format": "prettier --write .",
-    "prepare": "husky install",
-    "postinstall": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install; fi"
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^9.0.0"
   }
 }
