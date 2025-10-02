@@ -12,6 +12,7 @@
         "postinstall": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install; fi"
     },
     "devDependencies": {
+        "@tailwindcss/postcss": "^4.1.14",
         "@types/node": "^24.6.2",
         "@types/react": "^19.2.0",
         "@types/react-dom": "^19.2.0",
@@ -23,7 +24,6 @@
         "node": "20.18.0"
     },
     "dependencies": {
-        "@tailwindcss/postcss": "^4.1.14",
         "autoprefixer": "^10.4.21",
         "framer-motion": "^12.23.22",
         "next": "^15.5.4",
