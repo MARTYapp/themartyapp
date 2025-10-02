@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import Tailwind's base styles (preflight) */
+@import "tailwindcss/preflight";
+
+/* Import Tailwind utilities *@import "tailwindcss/utilitiestailwind utilities;
 
 /* Your actual CSS content */
 :root {
