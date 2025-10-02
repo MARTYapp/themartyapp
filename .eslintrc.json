@@ -6,6 +6,18 @@
       {
         "selector": "Literal[value='Marty']",
         "message": "Always write MARTY in all caps."
+      },
+      {
+        "selector": "Literal[value='marty']",
+        "message": "Always write MARTY in all caps."
+      },
+      {
+        "selector": "TemplateLiteral[quasis.0.value.raw=/Marty/]",
+        "message": "Always write MARTY in all caps."
+      },
+      {
+        "selector": "TemplateLiteral[quasis.0.value.raw=/marty/]",
+        "message": "Always write MARTY in all caps."
       }
     ]
   }

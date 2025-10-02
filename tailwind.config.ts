@@ -14,6 +14,8 @@ const config: Config = {
           steel: "#1a1c22",
           red: "#D23B3B",
           gold: "#F5D06F",
+          purple: "#8c00ff",
+          cyan: "#00ffe1",
         },
       },
       fontFamily: {
@@ -23,8 +25,8 @@ const config: Config = {
       backgroundImage: {
         "hero-texture": "none",
         "hero-texture-sm": "none",
-        "marty-gradient": "none",
-        "marty-steel": "none",
+        "marty-gradient": "linear-gradient(135deg, #0b0c12 0%, #1a1c22 100%)",
+        "marty-steel": "linear-gradient(180deg, #1a1c22 0%, #0b0c12 100%)",
       },
       dropShadow: {
         glow: "0 0 10px rgba(255,255,255,.25)",
@@ -50,17 +52,39 @@ const config: Config = {
           "0%,100%": { opacity: "1" },
           "50%": { opacity: ".5" },
         },
+        pulseFaster: {
+          "0%,100%": { opacity: "1" },
+          "50%": { opacity: ".3" },
+        },
+        glitch: {
+          "0%": { textShadow: "2px 0 red, -2px 0 cyan" },
+          "20%": { textShadow: "-2px 0 red, 2px 0 cyan" },
+          "40%": { textShadow: "2px 0 red, -2px 0 cyan" },
+          "60%": { textShadow: "-2px 0 red, 2px 0 cyan" },
+          "80%": { textShadow: "2px 0 red, -2px 0 cyan" },
+          "100%": { textShadow: "none" },
+        },
       },
       animation: {
         grain: "grain 8s steps(6) infinite",
         sweep: "sweep 12s linear infinite",
         pulseSlow: "pulseSlow 5s ease-in-out infinite",
+        pulseFaster: "pulseFaster 2s ease-in-out infinite",
+        glitch: "glitch 1.8s infinite",
       },
       letterSpacing: {
         tighter: "-.03em",
       },
       lineHeight: {
         snug: "1.1",
+      },
+      zIndex: {
+        overlay: "999",
+        behind: "-1",
+      },
+      spacing: {
+        cinematic: "3rem",
+        cinematicLg: "6rem",
       },
     },
   },

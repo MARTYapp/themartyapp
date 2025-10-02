@@ -1,109 +1,72 @@
-import Image from "next/image";
-import Link from "next/link";
-import WhyMartySection from "@/components/WhyMartySection";
-import FAQ from "@/components/FAQ";
+"use client"
+import { useState, useEffect, useRef } from "react"
 
-export default function Home() {
+export default function HomePage() {
+  const [input, setInput] = useState("")
+  const [chat, setChat] = useState<{user: string, marty: string}[]>([])
+  const chatEndRef = useRef<HTMLDivElement>(null)
+
+  async function sendMessage() {
+    const res = await fetch("/api/marty/respond", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: input }),
+    })
+    const data = await res.json()
+    setChat([...chat, { user: input, marty: data.reply }])
+    setInput("")
+  }
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [chat])
+
   return (
-    <main className="min-h-screen w-full bg-marty-bg text-white">
-      <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 overflow-hidden bg-black">
-        {/* BG layers */}
-        <div className="noise" aria-hidden />
-        <div className="sweep" aria-hidden />
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-6 font-sans bg-gradient-to-b from-gray-900 via-gray-800 to-black overflow-hidden">
+      {/* Background overlays for cinematic feel */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-600/20 to-transparent animate-[sweep_6s_ease-in-out_infinite]"></div>
+        <div className="absolute inset-0 bg-noise opacity-10"></div>
+      </div>
 
-        {/* SEO H1 (screen-reader only) */}
-        <h1 className="sr-only">The MARTY App — MARTY ≠ THERAPY</h1>
-
-        {/* Content */}
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center">
-          {/* Primary logo */}
-          <Image
-            src="/branding/logo-primary.png"
-            alt="The MARTY App primary logo"
-            width={220}
-            height={220}
-            priority
-            className="mb-6" />
-
-          {/* One-line wordmark: MARTY ≠ THERAPY */}
-          <Image
-            // NOTE: if your filename includes the combining slash character, this UTF-8 path should still work.
-            // If it 404s on deploy, rename the asset to a safe slug and update this path.
-            src="/branding/Logo-MARTYnotTHERAPY.png"
-            alt="MARTY ≠ THERAPY wordmark"
-            width={1200}
-            height={220}
-            priority
-            className="w-full max-w-[980px] h-auto drop-shadow-glow" />
-
-          {/* CTAs */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link href="#journal" className="btn btn-primary">Try MARTY Now</Link>
-            <Link href="#fund" className="btn btn-outline">Fund MARTY</Link>
-            <Link href="#why-marty" className="btn btn-outline">Why MARTY</Link>
+      <h1 className="relative text-4xl font-extrabold mb-6 text-red-600 drop-shadow-lg">The MARTY App</h1>
+      <div className="relative w-full max-w-md h-[60vh] overflow-y-auto space-y-4 px-2 py-4 bg-black bg-opacity-70 rounded-xl shadow-lg scrollbar-thin scrollbar-thumb-red-600 scrollbar-track-gray-900">
+        {chat.map((c, i) => (
+          <div
+            key={i}
+            className={`rounded-xl p-4 max-w-[80%] break-words shadow-md ${
+              i % 2 === 0
+                ? "ml-auto bg-gradient-to-r from-red-700 to-red-500 text-white"
+                : "mr-auto bg-gradient-to-r from-gray-800 to-gray-700 text-gray-200"
+            }`}
+          >
+            <p className="font-semibold mb-1">{i % 2 === 0 ? "You:" : "MARTY:"}</p>
+            <p>{i % 2 === 0 ? c.user : c.marty}</p>
           </div>
-
-          {/* Bottom line */}
-          <div className="mt-10 text-sm sm:text-base text-white/80">
-            Quiet tech for loud minds
-          </div>
-        </div>
-      </section>
-
-      <WhyMartySection />
-      <FAQ compact />
-
-      {/* === JOURNAL DEMO === */}
-      <section id="journal" className="relative py-20 px-6 bg-black">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl font-bold mb-6 tracking-tighter">Your MARTY Journal</h2>
-          <div className="mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-4 text-left">
-            <input
-              placeholder="Type your thought…"
-              className="w-full rounded-xl bg-black/40 px-4 py-3 outline-none placeholder:text-white/40"
-            />
-            <div className="mt-3 flex justify-end gap-3">
-              <Link href="/journal" className="btn btn-primary">Open Full Journal</Link>
-              <a
-                href="https://buymeacoffee.com/ericadler"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Buy Me a Coffee in a new tab to fund this build"
-                className="btn btn-outline"
-              >
-                Fund This Build
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* === FUND CTA === */}
-      <section id="fund" className="py-20 px-6 bg-black">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold mb-4 tracking-tighter">Fund the Founder</h2>
-          <p className="text-white/80 max-w-xl mx-auto">
-            Every dollar goes straight into building MARTY — servers, prototypes, survival. No VC filter. Just you + the founder making this real.
-          </p>
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <Link href="/fund" className="btn btn-primary">Stripe / Checkout</Link>
-            <a
-              href="https://buymeacoffee.com/ericadler"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open Buy Me a Coffee in a new tab"
-              className="btn btn-outline"
-            >
-              Buy Me a Coffee
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="border-t border-white/10 text-center text-xs text-white/60 py-8">
-        MARTY ≠ THERAPY — Not a therapist. Not a vibe app. Just MARTY.
-      </footer>
-    </main>
-  );
+        ))}
+        <div ref={chatEndRef} />
+      </div>
+      <div className="flex mt-6 w-full max-w-md">
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          className="flex-grow px-4 py-3 rounded-l-xl border-0 bg-gray-900 text-white placeholder-red-400 focus:outline-none focus:ring-2 focus:ring-red-600"
+          placeholder="Type your message..."
+          onKeyDown={e => {
+            if (e.key === "Enter" && input.trim()) {
+              e.preventDefault()
+              sendMessage()
+            }
+          }}
+        />
+        <button
+          onClick={sendMessage}
+          className="btn-square rounded-r-xl bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3"
+          disabled={!input.trim()}
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  )
 }

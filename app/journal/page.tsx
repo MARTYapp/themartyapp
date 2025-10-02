@@ -1,191 +1,217 @@
 "use client";
+import React, { useEffect, useRef, useState } from "react";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+// Provide a fallback type for SpeechRecognition if it doesn't exist in TS lib
+type SpeechRecognition = {
+  start(): void;
+  stop(): void;
+  lang: string;
+  interimResults: boolean;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onend: (() => void) | null;
+};
 
-type Msg = { id: number; from: "user" | "marty"; text: string };
+type SpeechRecognitionEvent = {
+  results: SpeechRecognitionResultList;
+};
+
+declare global {
+  interface Window {
+    webkitSpeechRecognition: typeof SpeechRecognition;
+    SpeechRecognition: typeof SpeechRecognition;
+  }
+};
+
+interface Message {
+  id: number;
+  role: "user" | "marty";
+  text: string;
+  ts: number;
+}
 
 export default function JournalPage() {
-  const [messages, setMessages] = useState<Msg[]>([
-    { id: 1, from: "marty", text: "Hey. You made it. This isn’t therapy — it’s us." },
-  ]);
+  const initial: Message[] = [
+    { id: 1, role: "marty", text: "Hey. You made it. This isn't therapy — it's us.", ts: Date.now() },
+  ];
+
+  const [messages, setMessages] = useState<Message[]>(() => {
+    try {
+      const saved = localStorage.getItem("marty_convo");
+      return saved ? JSON.parse(saved) : initial;
+    } catch (e) {
+      return initial;
+    }
+  });
   const [input, setInput] = useState("");
-  const [typing, setTyping] = useState(false);
+  const [loopAlerts, setLoopAlerts] = useState<string[]>([]);
+  const [listening, setListening] = useState(false);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
-  const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  // Persist & detect on every message change
+  useEffect(() => {
+    try {
+      localStorage.setItem("marty_convo", JSON.stringify(messages));
+    } catch (e) {}
+    detectLoops();
+  }, [messages]);
 
-  const send = () => {
-    const clean = input.trim();
+  // Basic pattern list we track locally. Move to server for production.
+  const PATTERNS = ["fuck off", "i can't", "idk", "avoid", "later"];
+
+  function sendMessage(text: string) {
+    const clean = text?.trim();
     if (!clean) return;
 
-    const userMsg: Msg = { id: Date.now(), from: "user", text: clean };
-    setMessages((prev) => [...prev, userMsg]);
+    const userMsg: Message = { id: Date.now(), role: "user", text: clean, ts: Date.now() };
+    setMessages((prev: Message[]) => [...prev, userMsg]);
     setInput("");
 
-    // fake MARTY reflection after 1.2s
-    setTyping(true);
-    setTimeout(() => {
-      const reply: Msg = {
-        id: Date.now() + 1,
-        from: "marty",
-        text: reflect(clean),
+    // Track patterns locally
+    trackPatterns(clean);
+
+    // Simulate async MARTY response (replace with /api call)
+    setTimeout(() => respondTo(clean), 350);
+  }
+
+  function appendMarty(text: string) {
+    const m: Message = { id: Date.now(), role: "marty", text, ts: Date.now() };
+    setMessages((prev: Message[]) => [...prev, m]);
+  }
+
+  function respondTo(text: string) {
+    const lower = text.toLowerCase();
+    const profanity = /\b(fuck|shit|bitch|asshole)\b/;
+
+    if (profanity.test(lower) || lower.includes("idk") || lower.includes("i don't know")) {
+      appendMarty("Heard. What's the next 10-minute action?");
+      return;
+    }
+
+    if (lower.includes("smoke") || lower.includes("drink")) {
+      appendMarty("If you do that, add: text someone you trust after it. Opposite action unlocked.");
+      return;
+    }
+
+    appendMarty("Okay. Tell me more or pick a 10-minute action.");
+  }
+
+  function trackPatterns(text: string) {
+    try {
+      const counts = JSON.parse(localStorage.getItem("marty_loops") || "{}");
+      PATTERNS.forEach((p) => {
+        if (text.toLowerCase().includes(p)) counts[p] = (counts[p] || 0) + 1;
+      });
+      localStorage.setItem("marty_loops", JSON.stringify(counts));
+    } catch (e) {}
+  }
+
+  function detectLoops() {
+    try {
+      const counts = JSON.parse(localStorage.getItem("marty_loops") || "{}");
+      const alerts = Object.entries(counts)
+        .filter(([k, v]) => v >= 3)
+        .map(([k, v]) => `${k} used ${v}x`);
+      setLoopAlerts(alerts as string[]);
+    } catch (e) {
+      setLoopAlerts([]);
+    }
+  }
+
+  function summarizeConversation() {
+    // Lightweight client-side summary — replace with LLM call for production
+    const userMsgs = messages.filter((m) => m.role === "user").slice(-8);
+    const bullets = userMsgs.map((m) => `• ${m.text}`);
+    // quick UI feedback — replace with a proper modal / UI element
+    alert("Summary (stub):\n" + bullets.join("\n"));
+  }
+
+  // Voice capture (browser SpeechRecognition). Fallback gracefully.
+  function toggleListen() {
+    const SpeechRecognitionClass =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognitionClass) {
+      alert("Speech recognition not available in this browser.");
+      return;
+    }
+
+    if (!recognitionRef.current) {
+      const r = new SpeechRecognitionClass();
+      r.lang = "en-US";
+      r.interimResults = true;
+      r.onresult = (ev: SpeechRecognitionEvent) => {
+        const last = ev.results[ev.results.length - 1][0].transcript;
+        setInput((prev) => (prev ? prev + " " + last : last));
       };
-      setMessages((prev) => [...prev, reply]);
-      setTyping(false);
-    }, 1200);
-  };
+      r.onend = () => setListening(false);
+      recognitionRef.current = r;
+    }
 
-  const reflect = (txt: string) => {
-    const t = txt.toLowerCase();
-    if (t.includes("tired")) return "Rest counts as progress. 20 minutes. Timer on.";
-    if (t.includes("stuck")) return "Pick one slice. 5 minutes. Move.";
-    if (t.includes("ok")) return "‘Ok’ is enough. What’s one next micro-step?";
-    return "Heard. What’s the next 10-minute action?";
-  };
-
-  // Auto-scroll on new messages
-  useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-  }, [messages.length, typing]);
-
-  // Auto-resize the textarea
-  const autoResize = () => {
-    const t = inputRef.current;
-    if (!t) return;
-    t.style.height = "0px";
-    t.style.height = Math.min(160, t.scrollHeight) + "px";
-  };
-  useLayoutEffect(() => {
-    autoResize();
-  }, [input]);
+    if (listening) {
+      recognitionRef.current?.stop();
+      setListening(false);
+    } else {
+      recognitionRef.current?.start();
+      setListening(true);
+    }
+  }
 
   return (
-    <main className="relative min-h-[100svh] bg-black text-white">
-      {/* Cinematic grid + sweep background */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-60
-                   [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)]
-                   [background-size:40px_40px,40px_40px]
-                   [mask-image:radial-gradient(1000px_400px_at_10%_-10%,black,transparent_70%),radial-gradient(800px_600px_at_110%_120%,black,transparent_60%)]"
-      />
+    <div className="min-h-screen bg-black text-white p-6">
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-3xl font-bold mb-4">Journal — Chat with MARTY</h1>
 
-      {/* Top Bar */}
-      <header className="sticky top-0 z-10 border-b border-white/10 bg-black/70 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-5 py-4">
-          <h1 className="text-[11px] font-black uppercase tracking-[0.2em] text-white/80">
-            MARTY ≠ THERAPY
-          </h1>
-          <div className="flex items-center gap-3 text-[11px] text-white/50">
-            <kbd className="rounded border border-white/20 bg-white/5 px-1.5 py-0.5">⌘</kbd>
-            <span>+</span>
-            <kbd className="rounded border border-white/20 bg-white/5 px-1.5 py-0.5">↵</kbd>
-            <span className="hidden sm:inline">to send</span>
+        {loopAlerts.length > 0 && (
+          <div className="bg-yellow-600 text-black p-3 rounded mb-4">
+            <strong>Loop detected:</strong> {loopAlerts.join("; ")} — Want to unpack?
           </div>
-        </div>
-      </header>
-
-      {/* Chat */}
-      <section className="mx-auto flex min-h-[calc(100svh-160px)] max-w-4xl flex-col px-5 py-6">
-        {/* Screen-reader live region */}
-        <div className="sr-only" aria-live="polite" aria-atomic="false">
-          {messages[messages.length - 1]?.text}
-        </div>
-
-        {/* Stream */}
-        <div
-          ref={scrollerRef}
-          className="flex-1 overflow-y-auto pr-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20"
-        >
-          <div className="space-y-4 pb-6">
-            {messages.map((m) => (
-              <Bubble key={m.id} from={m.from}>
-                {m.text}
-              </Bubble>
-            ))}
-            {typing && (
-              <div className="flex justify-start">
-                <div className="rounded-xl border border-white/15 bg-white/[0.04] text-white/70 px-4 py-2 text-xs">
-                  MARTY is typing…
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Composer */}
-        <div className="sticky bottom-0 z-10 mt-2 rounded-2xl border border-white/10 bg-white/[0.03] p-2">
-          <div className="flex items-end gap-2">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                // Enter sends (unless Shift held)
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  send();
-                  return;
-                }
-                // Cmd/Ctrl + Enter also sends
-                if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
-                  e.preventDefault();
-                  send();
-                }
-              }}
-              rows={1}
-              placeholder="Say it like it is… (Shift+Enter for newline)"
-              className="flex-1 resize-none rounded-xl bg-black/60 px-4 py-3 text-white outline-none placeholder:text-white/40 focus:ring-1 focus:ring-white/20"
-            />
-            <button
-              onClick={send}
-              className="rounded-xl border border-white bg-white px-5 py-2.5 font-semibold text-black transition hover:bg-black hover:text-white hover:shadow-[0_0_0_1px_#fff]"
-            >
-              Send
-            </button>
-          </div>
-          {/* Quick actions */}
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            <Quick onClick={() => setInput((v) => (v ? v + " 10-min timer" : "10-min timer"))}>10-min timer</Quick>
-            <Quick onClick={() => setInput((v) => (v ? v + " opposite action" : "opposite action"))}>Opposite action</Quick>
-            <Quick onClick={() => setInput((v) => (v ? v + " breathe 4-4-4-4" : "breathe 4-4-4-4"))}>4-count breath</Quick>
-          </div>
-        </div>
-      </section>
-    </main>
-  );
-}
-
-function Bubble({ from, children }: { from: "user" | "marty"; children: React.ReactNode }) {
-  const isUser = from === "user";
-  return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-      <div
-        className={[
-          "max-w-[80%] rounded-xl border px-4 py-3 text-[0.95rem] leading-7 shadow-sm",
-          isUser
-            ? "border-white bg-white text-black rounded-tr-sm"
-            : "border-white/15 bg-white/[0.04] text-white/90 rounded-tl-sm",
-        ].join(" ")}
-      >
-        {!isUser && (
-          <div className="mb-1 text-[10px] font-bold uppercase tracking-widest text-white/50">MARTY</div>
         )}
-        {children}
+
+        <div className="space-y-3 mb-4">
+          {messages.map((m: Message) => (
+            <div
+              key={m.id}
+              className={`p-3 rounded-2xl max-w-[90%] ${
+                m.role === "marty" ? "bg-neutral-800 self-start" : "bg-red-500 text-black self-end"
+              }`}
+            >
+              <div className="text-sm opacity-60">{m.role === "marty" ? "MARTY" : "You"}</div>
+              <div className="mt-1">{m.text}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex gap-2 items-center">
+          <button onClick={toggleListen} className={`px-3 py-2 rounded ${listening ? "bg-red-600" : "bg-neutral-800"}`}>
+            {listening ? "Listening..." : "Voice"}
+          </button>
+
+          <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Say it like it is..." className="flex-1 bg-neutral-900 p-3 rounded text-white" />
+
+          <button onClick={() => sendMessage(input)} className="bg-white text-black px-4 py-2 rounded">
+            Send
+          </button>
+        </div>
+
+        <div className="mt-4 flex gap-2">
+          <button onClick={summarizeConversation} className="px-3 py-2 bg-neutral-800 rounded">
+            Generate Summary
+          </button>
+
+          <button
+            onClick={() => {
+              try {
+                localStorage.setItem("marty_saved_entry_" + Date.now(), JSON.stringify(messages));
+                alert("Saved to localStorage as entry");
+              } catch (e) {
+                alert("Failed to save");
+              }
+            }}
+            className="px-3 py-2 bg-neutral-800 rounded"
+          >
+            Save Entry
+          </button>
+        </div>
       </div>
     </div>
-  );
-}
-
-function Quick({ onClick, children }: { onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      onClick={onClick}
-      className="rounded-lg border border-white/15 bg-white/[0.04] px-2.5 py-1.5 text-[11px] uppercase tracking-widest text-white/70 transition hover:bg-white/10 hover:text-white"
-    >
-      {children}
-    </button>
   );
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata = {
   title: "Investors — MARTY ≠ THERAPY",
   description:
-    "MARTY is a voice-first, persona-driven AI that turns reflection into action. Investor overview and acquisition thesis.",
+    "MARTY is a persona-driven, voice-first AI turning reflection into action. Investor overview, KPIs, and acquisition thesis.",
   openGraph: {
     title: "Investors — MARTY ≠ THERAPY",
     images: ["/branding/social-opengraph.png"],
@@ -63,59 +63,62 @@ function SlideFrame({
 export default function InvestorsPage() {
   return (
     <main className="h-[100svh] snap-y snap-mandatory overflow-y-auto bg-black text-white">
-      {/* Cover (slide 1) */}
+      {/* Cover */}
       <SlideFrame
         title="MARTY × Meta"
-        subtitle="Acquisition pitch — cinematic personal AI with teeth"
+        subtitle="Investable AI — cinematic, persona-driven, high-retention"
         image="/branding/Meta/1.png"
         caption="Cover"
       />
 
-      {/* Slide 1 — The Product */}
+      {/* Product Overview */}
       <SlideFrame
-        title="Just MARTY"
-        subtitle="Voice-first AI persona — trauma-smart, older-brother tone"
+        title="Product: Just MARTY"
+        subtitle="Voice-first AI persona — trauma-informed, engaging, older-brother tone"
         image="/branding/Meta/2.png"
-        caption="Slide 1 — The Product"
+        caption="Slide 1 — Product"
       />
 
+      {/* Differentiation */}
       <SlideFrame
-        title="Why MARTY > ChatGPT & Calm"
-        subtitle="Cinematic vs. Corporate"
+        title="Differentiation"
+        subtitle="Cinematic UX vs. corporate AI — deep engagement, behavioral insights"
         image="/branding/Meta/3.png"
         caption="Slide 2 — Differentiation"
       />
 
+      {/* KPIs */}
       <SlideFrame
         title="Retention = Value"
-        subtitle="North Star KPI: 3 × 8 × 3"
+        subtitle="North Star KPI: 3 × 8 × 3 (daily active → engaged users → reflection completion)"
         image="/branding/Meta/4.png"
         caption="Slide 3 — KPI"
       />
 
+      {/* Monetization */}
       <SlideFrame
         title="Monetization Stack"
-        subtitle="4 revenue streams → multi-$B potential"
+        subtitle="4 high-margin revenue streams → multi-$B TAM"
         image="/branding/Meta/5.png"
         caption="Slide 4 — Monetization"
       />
 
+      {/* Acquisition Thesis */}
       <SlideFrame
-        title="Why Meta Should Buy Now"
-        subtitle="Own the cultural wedge"
+        title="Acquisition Thesis"
+        subtitle="Own the cultural wedge — rapidly scale adoption and lock in retention"
         image="/branding/Meta/6.png"
         caption="Slide 5 — Acquisition Thesis"
       />
 
+      {/* CTA Section */}
       <section className="relative flex min-h-[70svh] w-full snap-start items-center justify-center bg-black">
         <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-6 text-center">
           <h2 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
-            Get the full investor memo
+            Access the full investor memo
           </h2>
           <p className="max-w-2xl text-white/70 sm:text-lg">
-            Interested in the deeper deck, benchmarks, and roadmap? Let’s talk.
-            We’ll share the complete model, North Star KPI instrumentation, and
-            GTM sprints.
+            Explore the full deck, market benchmarks, KPI dashboards, and GTM strategy. Contact us to review the detailed model, traction metrics, and revenue projections.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link href="mailto:eric@themarty.app" className="btn btn-primary">

@@ -1,105 +1,91 @@
 @import "tailwindcss";
 
-/* light/dark vars (from the Next template) */
+/* Light/Dark root vars */
 :root { --background: #ffffff; --foreground: #171717; }
-@media (prefers-color-scheme: dark){ :root { --background:#0a0a0a; --foreground:#ededed; } }
+@media (prefers-color-scheme: dark) {
+  :root { --background: #0a0a0a; --foreground: #ededed; }
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
 }
 
-/* MARTY typographic tweaks */
-:root { --marty-leading: 1.05 }
-h1, h2, h3 { line-height: var(--marty-leading); letter-spacing: -0.01em }
+/* Typographic tweaks */
+:root { --marty-leading: 1.05; }
+h1, h2, h3 { line-height: var(--marty-leading); letter-spacing: -0.01em; }
 
 /* Cinematic helpers */
-.sweep{ position:absolute; inset:-10% 0;
-  background: linear-gradient(100deg, rgba(255,255,255,0) 0%,
-    rgba(255,255,255,.08) 40%, rgba(255,255,255,0) 80%);
-  mix-blend-mode: screen; animation: sweep 12s linear infinite; pointer-events:none; opacity:.18; }
-.noise{ position:absolute; inset:0; pointer-events:none;
+.sweep {
+  position: absolute;
+  inset: -10% 0;
+  background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.08) 40%, rgba(255,255,255,0) 80%);
+  mix-blend-mode: screen;
+  animation: sweep 12s linear infinite;
+  pointer-events: none;
+  opacity: 0.18;
+}
+.noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   background-image: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px);
-  background-size:3px 3px; mix-blend-mode: overlay; animation: grain 8s steps(6) infinite; }
-
-@media (max-width:640px){ .sweep{ display:none } .noise{ opacity:.22 } }
-
-@media (prefers-reduced-motion: reduce){
-  .sweep{ animation: none }
-  .noise{ animation: none }
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+  animation: grain 8s steps(6) infinite;
 }
+@media (max-width: 640px) { .sweep { display: none; } .noise { opacity: .22; } }
+@media (prefers-reduced-motion: reduce) { .sweep, .noise { animation: none; } }
 
-/* Opt‑in cinematic backgrounds (no global overrides) */
-.bg-site-gradient-dark {
-  background: linear-gradient(to bottom, #000428, #000);
-  color: #fff;
-}
-.bg-site-gradient-light {
+/* Cinematic gradients */
+.bg-site-gradient-dark { background: linear-gradient(to bottom, #000428, #000); color: #fff; }
+.bg-site-gradient-light { background: linear-gradient(to bottom, #ffffff, #f5f5f7); color: #171717; }
+.bg-site-gradient-auto {
   background: linear-gradient(to bottom, #ffffff, #f5f5f7);
   color: #171717;
 }
+@media (prefers-color-scheme: dark) { .bg-site-gradient-auto { background: linear-gradient(to bottom, #000428, #000); color: #fff; } }
 
-/* If you toggle <html class="dark">, prefer the dark gradient by default */
-:root { color-scheme: light dark; }
-@media (prefers-color-scheme: dark) {
-  .bg-site-gradient-auto { background: linear-gradient(to bottom, #000428, #000); color: #fff; }
-}
-@media (prefers-color-scheme: light) {
-  .bg-site-gradient-auto { background: linear-gradient(to bottom, #ffffff, #f5f5f7); color: #171717; }
-}
-
-/* Tailwind v4 custom utilities (instead of @layer components) */
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9999px; /* rounded-full */
-  padding: 0.75rem 1.5rem; /* px-6 py-3 */
-  font-weight: 600; /* font-semibold */
-  transition: all 0.2s ease-in-out; /* transition */
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
 }
-.btn-primary {
-  background: #ffffff;
-  color: #000000;
+.btn-primary { background: #fff; color: #000; }
+.btn-primary:hover { background: rgba(255,255,255,0.9); }
+.btn-outline { border: 1px solid rgba(255,255,255,0.2); color: #fff; background: transparent; }
+.btn-outline:hover { background: #fff; color: #000; }
+.btn-square {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  transition: all 0.2s ease-in-out;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
 }
-.btn-primary:hover {
-  background: rgba(255, 255, 255, 0.9);
-}
-.btn-outline {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  background: transparent;
-}
-.btn-outline:hover {
-  background: #ffffff;
-  color: #000000;
-}
+.btn-square:hover { background: #fff; color: #000; }
+
+/* Cards */
 .card {
-  border-radius: 1rem; /* rounded-2xl */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
-  padding: 1.25rem; /* p-5 */
+  border-radius: 1rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  padding: 1.25rem;
 }
 
-/* keyframes referenced by classes above */
-@keyframes grain {
-  0%,100% { transform: translate(0,0) }
-  10% { transform: translate(-1%,1%) }
-  20% { transform: translate(1%,1%) }
-  30% { transform: translate(1%,-1%) }
-  40% { transform: translate(-1%,1%) }
-  50% { transform: translate(-1%,0) }
-  60% { transform: translate(1%,0) }
-  70% { transform: translate(0,1%) }
-  80% { transform: translate(0,-1%) }
-  90% { transform: translate(1%,0) }
-}
-@keyframes sweep { 0% { transform: translateX(-100%) } 100% { transform: translateX(100%) } }
-
-/* === MARTY MASC / CINEMATIC VIBE === */
-
-/* Brutalist monospace accents for small text */
+/* Typographic accents */
 code, kbd, samp {
   font-family: "Menlo", "Consolas", monospace;
   background: rgba(255,255,255,0.05);
@@ -108,8 +94,6 @@ code, kbd, samp {
   font-size: 0.85em;
   letter-spacing: 0.02em;
 }
-
-/* Strong uppercase tracking for nav and mini labels */
 .upper-label {
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -118,54 +102,15 @@ code, kbd, samp {
   color: rgba(255,255,255,0.6);
 }
 
-/* Cinematic glitch animation (can be applied via class) */
+/* Glitch animation */
 @keyframes glitch {
-  0% { text-shadow: 2px 0 red, -2px 0 cyan; }
-  20% { text-shadow: -2px 0 red, 2px 0 cyan; }
-  40% { text-shadow: 2px 0 red, -2px 0 cyan; }
-  60% { text-shadow: -2px 0 red, 2px 0 cyan; }
-  80% { text-shadow: 2px 0 red, -2px 0 cyan; }
+  0%,20%,40%,60%,80% { text-shadow: 2px 0 red, -2px 0 cyan; }
   100% { text-shadow: none; }
 }
-.glitch-text {
-  animation: glitch 1.8s infinite;
-}
+.glitch-text { animation: glitch 1.8s infinite; }
 
-/* Masculine buttons with hard edge */
-.btn-square {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.25rem; /* px-5 py-3 */
-  font-weight: 700; /* font-bold */
-  text-transform: uppercase;
-  letter-spacing: 0.2em; /* tracking-widest */
-  transition: all 0.2s ease-in-out;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.05);
-}
-.btn-square:hover {
-  background: white;
-  color: black;
-}
-
-/* Subtle grid background (used in layout) */
-.marty-grid-bg {
-  background:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-.grid-overlay{
-  background:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 50px 50px, 50px 50px;
-}
-
-/* Background utility used in components (no inline styles) */
-.bg-cinematic-grid{
+/* Cinematic grid overlay */
+.marty-grid-bg, .grid-overlay, .bg-cinematic-grid {
   background:
     linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
@@ -173,10 +118,4 @@ code, kbd, samp {
 }
 
 /* Global type scale */
-html {
-  font-size: 18px; /* bump from Tailwind’s default 16px */
-}
-
-body {
-  line-height: 1.6; /* improve readability */
-}
+html { font-size: 18px; }

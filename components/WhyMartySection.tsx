@@ -22,11 +22,18 @@ const FEATURE_ROWS: FeatureRow[] = [
 ];
 
 // ---------- UI Bits ----------
-function Dot({ on }: { on: boolean }) {
+function Dot({ on, highlight }: { on: boolean; highlight?: boolean }) {
   return (
     <span
       aria-hidden
-      className={["inline-block h-2.5 w-2.5 rounded-sm align-middle", on ? "bg-white" : "bg-white/25"].join(" ")}
+      className={[
+        "inline-block h-2.5 w-2.5 rounded-sm align-middle",
+        on
+          ? highlight
+            ? "bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 shadow-[0_0_8px_rgba(255,105,180,0.7)]"
+            : "bg-white"
+          : "bg-white/25",
+      ].join(" ")}
     />
   );
 }
@@ -34,7 +41,13 @@ function Dot({ on }: { on: boolean }) {
 function ComparisonTable() {
   return (
     <section aria-labelledby="compare-heading" className="mt-12">
-      <h3 id="compare-heading" className="mb-4 text-lg font-bold text-white/90">How MARTY differs</h3>
+      <h3
+        id="compare-heading"
+        className="mb-4 text-lg font-bold text-white/90"
+        style={{ textShadow: "0 1px 3px rgba(0,0,0,0.7)" }}
+      >
+        How MARTY differs
+      </h3>
 
       <div className="overflow-hidden rounded-lg border border-white/10">
         {/* Header */}
@@ -48,11 +61,20 @@ function ComparisonTable() {
         {/* Rows */}
         <ul className="divide-y divide-white/10">
           {FEATURE_ROWS.map((r, i) => (
-            <li key={i} className="grid grid-cols-12 items-center text-sm">
+            <li
+              key={i}
+              className="grid grid-cols-12 items-center text-sm transform transition duration-300 hover:scale-[1.02] hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+            >
               <div className="col-span-6 px-4 py-3 text-white/85">{r.label}</div>
-              <div className="col-span-2 px-4 py-3"><Dot on={r.marty} /></div>
-              <div className="col-span-2 px-4 py-3"><Dot on={r.llm} /></div>
-              <div className="col-span-2 px-4 py-3"><Dot on={r.wellness} /></div>
+              <div className="col-span-2 px-4 py-3">
+                <Dot on={r.marty} highlight />
+              </div>
+              <div className="col-span-2 px-4 py-3">
+                <Dot on={r.llm} />
+              </div>
+              <div className="col-span-2 px-4 py-3">
+                <Dot on={r.wellness} />
+              </div>
             </li>
           ))}
         </ul>
@@ -64,8 +86,12 @@ function ComparisonTable() {
 // ---------- Value Panel (image version) ----------
 export function ValuePanel() {
   return (
-    <section aria-labelledby="value-heading" className="mt-12">
-      <h3 id="value-heading" className="mb-4 text-lg font-bold text-white/90">
+    <section aria-labelledby="value-heading" className="mt-12 relative">
+      <h3
+        id="value-heading"
+        className="mb-4 text-lg font-bold text-white/90 relative z-10"
+        style={{ textShadow: "0 1px 3px rgba(0,0,0,0.7)" }}
+      >
         Why this makes money
       </h3>
 
@@ -77,6 +103,10 @@ export function ValuePanel() {
           priority
           sizes="(min-width: 1024px) 1024px, 100vw"
           className="object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30"
         />
       </div>
     </section>

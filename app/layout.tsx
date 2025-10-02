@@ -27,23 +27,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="bg-black">
       <head>
         <link rel="icon" href="/branding/favicon.ico" sizes="any" />
-        {/* Theme colors for supported browsers */}
         <meta name="theme-color" content="#ffffff" />
         <meta name="msapplication-navbutton-color" content="#000000" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="color-scheme" content="light dark" />
       </head>
       <body className="bg-black text-white antialiased">
-        <div className="min-h-screen bg-black text-white font-sans tracking-tight selection:bg-white selection:text-black">
+        <div className="relative min-h-screen font-sans tracking-tight selection:bg-white selection:text-black">
           <TopNav />
-          <main className="relative">{children}</main>
-          <footer className="py-6 text-center text-xs text-white/40">
-            Built by Eric Adler — the MARTY app 
+          {/* Cinematic gradient background */}
+          <div aria-hidden className="absolute inset-0 -z-20 bg-site-gradient-auto" />
+          <div aria-hidden className="sweep" />
+          <div aria-hidden className="noise" />
+          <main className="relative z-10">{children}</main>
+          <footer className="relative z-10 py-6 text-center text-xs text-white/40">
+            Built by Eric Adler — the MARTY app
           </footer>
-          <div
-            aria-hidden
-            className="pointer-events-none fixed inset-0 -z-10 opacity-50 grid-overlay"
-          />
+          <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 opacity-50 grid-overlay" />
         </div>
       </body>
     </html>

@@ -59,14 +59,18 @@ export default function FAQ({ compact = false, items = DEFAULT_FAQ }: { compact?
     : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6";
 
   return (
-    <section id="faq" className="relative w-full bg-black text-white border-t border-white/10" aria-labelledby="faq-heading">
+    <section
+      id="faq"
+      className="relative w-full bg-gradient-to-br from-black via-zinc-900 to-black text-white border-t border-white/10"
+      aria-labelledby="faq-heading"
+    >
       <div className="relative mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <header className="max-w-3xl">
           <h2 id="faq-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight">
             Frequently Asked
           </h2>
           <p className="mt-3 text-base sm:text-lg text-white/70">
-            No corporate fluff. If you don’t see your question, DM and we’ll add it.
+            We’re founders building for founders. If you don’t see your question here, DM us — we’ll add it and keep it real.
           </p>
         </header>
 
@@ -76,15 +80,19 @@ export default function FAQ({ compact = false, items = DEFAULT_FAQ }: { compact?
               key={it.id}
               id={it.id}
               open={hash === it.id}
-              className="group rounded-2xl border border-white/12 bg-white/[0.035] p-0 backdrop-blur-[1px] transition-colors hover:bg-white/[0.05] focus-within:bg-white/[0.05]"
+              className="group rounded-2xl border border-white/12 bg-white/[0.035] p-0 backdrop-blur-[1px] transition-transform transition-shadow hover:shadow-lg hover:scale-[1.02] hover:bg-white/[0.05] focus-within:bg-white/[0.05]"
             >
               <summary
                 className="flex w-full cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-4 outline-none focus-visible:ring-2 focus-visible:ring-white/30"
               >
-                <span className="text-base sm:text-lg font-semibold leading-snug text-white/95">
+                <span className="text-base sm:text-lg font-extrabold leading-snug text-white/95">
                   {it.q}
                 </span>
-                <Chevron className="h-5 w-5 text-white/60 transition-transform group-open:rotate-45" />
+                <Chevron
+                  className={`h-5 w-5 transition-transform group-open:rotate-45 ${
+                    hash === it.id ? "text-indigo-400" : "text-white/60"
+                  }`}
+                />
               </summary>
 
               <div className="px-5 pb-5">
