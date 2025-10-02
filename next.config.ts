@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["themartyapp.com", "cdn.themartyapp.com"],
   },
+  experimental: {
+    // Keep empty or add valid experimental flags if needed
+  },
 };
 
 export default nextConfig;

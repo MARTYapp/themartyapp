@@ -1,9 +1,11 @@
 "use client"
 import { useState, useEffect, useRef } from "react"
 
+type Message = { user: string; marty: string }
+
 export default function HomePage() {
   const [input, setInput] = useState("")
-  const [chat, setChat] = useState<{user: string, marty: string}[]>([])
+  const [chat, setChat] = useState<Message[]>([])
   const chatEndRef = useRef<HTMLDivElement>(null)
 
   async function sendMessage() {
@@ -35,13 +37,13 @@ export default function HomePage() {
           <div
             key={i}
             className={`rounded-xl p-4 max-w-[80%] break-words shadow-md ${
-              i % 2 === 0
+              c.user === chat[i].user && c.marty === chat[i].marty
                 ? "ml-auto bg-gradient-to-r from-red-700 to-red-500 text-white"
                 : "mr-auto bg-gradient-to-r from-gray-800 to-gray-700 text-gray-200"
             }`}
           >
-            <p className="font-semibold mb-1">{i % 2 === 0 ? "You:" : "MARTY:"}</p>
-            <p>{i % 2 === 0 ? c.user : c.marty}</p>
+            <p className="font-semibold mb-1">{c.user === chat[i].user ? "You:" : "MARTY:"}</p>
+            <p>{c.user === chat[i].user ? c.user : c.marty}</p>
           </div>
         ))}
         <div ref={chatEndRef} />

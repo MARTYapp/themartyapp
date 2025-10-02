@@ -80,7 +80,7 @@ export default function FAQ({ compact = false, items = DEFAULT_FAQ }: { compact?
               key={it.id}
               id={it.id}
               open={hash === it.id}
-              className="group rounded-2xl border border-white/12 bg-white/[0.035] p-0 backdrop-blur-[1px] transition-transform transition-shadow hover:shadow-lg hover:scale-[1.02] hover:bg-white/[0.05] focus-within:bg-white/[0.05]"
+              className="group rounded-2xl border border-white/12 bg-white/[0.035] p-0 backdrop-blur-[1px] transition-all hover:shadow-lg hover:scale-[1.02] hover:bg-white/[0.05] focus-within:bg-white/[0.05]"
             >
               <summary
                 className="flex w-full cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-4 outline-none focus-visible:ring-2 focus-visible:ring-white/30"

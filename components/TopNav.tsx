@@ -3,7 +3,9 @@
 
 import Link from "next/link";
 
-export default function TopNav() {
+import { JSX } from "react";
+
+export default function TopNav(): JSX.Element {
   return (
     <header className="sticky top-0 z-50 w-full bg-black/80 backdrop-blur border-b border-white/10">
       <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between relative">

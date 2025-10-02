@@ -16,13 +16,13 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
       "martyengine/*": ["./martyengine/*"]
     },
-    "types": ["node"],
-    "plugins": [{ "name": "next" }]
+    "types": ["node", "react", "react-dom"],
+    "plugins": [{ "name": "next" }],
+    "ignoreDeprecations": "6.0"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

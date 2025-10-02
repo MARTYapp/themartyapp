@@ -11,17 +11,19 @@ export const metadata = {
   },
 };
 
+type SlideProps = {
+  title?: string;
+  subtitle?: string;
+  image?: string;
+  caption?: string;
+};
+
 function SlideFrame({
   title,
   subtitle,
   image,
   caption,
-}: {
-  title?: string;
-  subtitle?: string;
-  image?: string;
-  caption?: string;
-}) {
+}: SlideProps) {
   return (
     <section
       className="relative flex h-[100svh] w-full snap-start items-center justify-center overflow-hidden bg-black text-white"
@@ -60,7 +62,9 @@ function SlideFrame({
   );
 }
 
-export default function InvestorsPage() {
+import type { JSX } from "react";
+
+export default function InvestorsPage(): JSX.Element {
   return (
     <main className="h-[100svh] snap-y snap-mandatory overflow-y-auto bg-black text-white">
       {/* Cover */}
@@ -121,10 +125,10 @@ export default function InvestorsPage() {
             Explore the full deck, market benchmarks, KPI dashboards, and GTM strategy. Contact us to review the detailed model, traction metrics, and revenue projections.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <Link href="mailto:eric@themarty.app" className="btn btn-primary">
+            <Link href="mailto:eric@themarty.app" className="btn btn-primary" passHref>
               Email Eric
             </Link>
-            <Link href="/branding/MARTY_Investor_OnePager.pdf" className="btn btn-outline">
+            <Link href="/branding/MARTY_Investor_OnePager.pdf" className="btn btn-outline" passHref>
               Download one‑pager
             </Link>
           </div>

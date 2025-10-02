@@ -1,27 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 
-// Provide a fallback type for SpeechRecognition if it doesn't exist in TS lib
-type SpeechRecognition = {
-  start(): void;
-  stop(): void;
-  lang: string;
-  interimResults: boolean;
-  onresult: ((event: SpeechRecognitionEvent) => void) | null;
-  onend: (() => void) | null;
-};
-
-type SpeechRecognitionEvent = {
-  results: SpeechRecognitionResultList;
-};
-
-declare global {
-  interface Window {
-    webkitSpeechRecognition: typeof SpeechRecognition;
-    SpeechRecognition: typeof SpeechRecognition;
-  }
-};
-
 interface Message {
   id: number;
   role: "user" | "marty";
@@ -38,20 +17,22 @@ export default function JournalPage() {
     try {
       const saved = localStorage.getItem("marty_convo");
       return saved ? JSON.parse(saved) : initial;
-    } catch (e) {
+    } catch (e: any) {
       return initial;
     }
   });
   const [input, setInput] = useState("");
   const [loopAlerts, setLoopAlerts] = useState<string[]>([]);
   const [listening, setListening] = useState(false);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+
+  const SpeechRecognitionClass = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+  const recognitionRef = useRef<any>(null);
 
   // Persist & detect on every message change
   useEffect(() => {
     try {
       localStorage.setItem("marty_convo", JSON.stringify(messages));
-    } catch (e) {}
+    } catch (e: any) {}
     detectLoops();
   }, [messages]);
 
@@ -97,22 +78,22 @@ export default function JournalPage() {
 
   function trackPatterns(text: string) {
     try {
-      const counts = JSON.parse(localStorage.getItem("marty_loops") || "{}");
+      const counts = JSON.parse(localStorage.getItem("marty_loops") || "{}") as Record<string, number>;
       PATTERNS.forEach((p) => {
         if (text.toLowerCase().includes(p)) counts[p] = (counts[p] || 0) + 1;
       });
       localStorage.setItem("marty_loops", JSON.stringify(counts));
-    } catch (e) {}
+    } catch (e: any) {}
   }
 
   function detectLoops() {
     try {
-      const counts = JSON.parse(localStorage.getItem("marty_loops") || "{}");
+      const counts = JSON.parse(localStorage.getItem("marty_loops") || "{}") as Record<string, number>;
       const alerts = Object.entries(counts)
         .filter(([k, v]) => v >= 3)
         .map(([k, v]) => `${k} used ${v}x`);
       setLoopAlerts(alerts as string[]);
-    } catch (e) {
+    } catch (e: any) {
       setLoopAlerts([]);
     }
   }
@@ -127,8 +108,6 @@ export default function JournalPage() {
 
   // Voice capture (browser SpeechRecognition). Fallback gracefully.
   function toggleListen() {
-    const SpeechRecognitionClass =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognitionClass) {
       alert("Speech recognition not available in this browser.");
       return;
@@ -138,7 +117,7 @@ export default function JournalPage() {
       const r = new SpeechRecognitionClass();
       r.lang = "en-US";
       r.interimResults = true;
-      r.onresult = (ev: SpeechRecognitionEvent) => {
+      r.onresult = (ev: any) => {
         const last = ev.results[ev.results.length - 1][0].transcript;
         setInput((prev) => (prev ? prev + " " + last : last));
       };
@@ -202,7 +181,7 @@ export default function JournalPage() {
               try {
                 localStorage.setItem("marty_saved_entry_" + Date.now(), JSON.stringify(messages));
                 alert("Saved to localStorage as entry");
-              } catch (e) {
+              } catch (e: any) {
                 alert("Failed to save");
               }
             }}

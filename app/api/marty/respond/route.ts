@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+type ChatMessage = { role: "system" | "user" | "assistant"; content: string };
 
 function buildSystemPrompt(modules: string[]): string {
   return `You are MARTY, a supportive AI guide. Modules active: ${modules.join(", ") || "none"}.`;
@@ -20,7 +21,7 @@ function selectModel(modules: string[]): string {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { messages, modules = [] }: { messages: ChatCompletionMessageParam[], modules?: string[] } = body;
+    const { messages, modules = [] }: { messages: ChatMessage[]; modules?: string[] } = body;
 
     if (!Array.isArray(messages)) {
       return NextResponse.json({ error: "Invalid message format" }, { status: 400 });
@@ -41,8 +42,9 @@ export async function POST(req: Request) {
       reply: completion.choices[0].message?.content ?? "",
     });
   } catch (err) {
-    if (err instanceof OpenAI.APIError) {
-      return NextResponse.json({ error: err.message }, { status: err.status ?? 500 });
+    const error = err as any;
+    if (error instanceof OpenAI.APIError) {
+      return NextResponse.json({ error: error.message }, { status: error.status ?? 500 });
     }
     console.error(err);
     return NextResponse.json(

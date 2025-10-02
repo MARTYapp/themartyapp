@@ -52,10 +52,7 @@ export default function PricingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {tiers.map((tier) => (
-            <div
-              key={tier.name}
-              className={`rounded-2xl p-6 flex flex-col items-center transition-transform transform hover:scale-[1.03] ${tier.gradient} border border-white/10`}
-            >
+            <section key={tier.name} aria-label={tier.name} className={`rounded-2xl p-6 flex flex-col items-center transition-transform transform hover:scale-[1.03] ${tier.gradient} border border-white/10`}>
               <h2 className="text-2xl font-bold mb-2">{tier.name}</h2>
               <p className="text-3xl font-extrabold mb-4">{tier.price}</p>
               <ul className="mb-6 space-y-2 text-white/80">
@@ -65,13 +62,13 @@ export default function PricingPage() {
                   </li>
                 ))}
               </ul>
-              <a
-                href="#"
-                className="btn-square bg-white text-black px-6 py-3 font-bold hover:bg-black hover:text-white transition-all"
+              <button
+                type="button"
+                className="btn-square bg-white text-black px-6 py-3 font-bold hover:bg-black hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
               >
                 {tier.cta}
-              </a>
-            </div>
+              </button>
+            </section>
           ))}
         </div>
       </div>

@@ -40,11 +40,11 @@ function Dot({ on, highlight }: { on: boolean; highlight?: boolean }) {
 
 function ComparisonTable() {
   return (
-    <section aria-labelledby="compare-heading" className="mt-12">
+    <section tabIndex={-1} aria-labelledby="compare-heading" className="mt-12">
       <h3
         id="compare-heading"
         className="mb-4 text-lg font-bold text-white/90"
-        style={{ textShadow: "0 1px 3px rgba(0,0,0,0.7)" }}
+        style={{ textShadow: "0 1px 2px rgba(0,0,0,0.6)" }}
       >
         How MARTY differs
       </h3>
@@ -86,11 +86,11 @@ function ComparisonTable() {
 // ---------- Value Panel (image version) ----------
 export function ValuePanel() {
   return (
-    <section aria-labelledby="value-heading" className="mt-12 relative">
+    <section tabIndex={-1} aria-labelledby="value-heading" className="mt-12 relative">
       <h3
         id="value-heading"
         className="mb-4 text-lg font-bold text-white/90 relative z-10"
-        style={{ textShadow: "0 1px 3px rgba(0,0,0,0.7)" }}
+        style={{ textShadow: "0 1px 2px rgba(0,0,0,0.6)" }}
       >
         Why this makes money
       </h3>
@@ -98,14 +98,14 @@ export function ValuePanel() {
       <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border border-white/10">
         <Image
           src="/branding/slide.png"
-          alt="Why this makes money"
+          alt="Illustration showing why this product generates revenue"
           fill
           priority
           sizes="(min-width: 1024px) 1024px, 100vw"
           className="object-cover"
         />
         <div
-          aria-hidden="true"
+          role="presentation"
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30"
         />
       </div>
@@ -116,7 +116,7 @@ export function ValuePanel() {
 // ---------- Default export (used on homepage) ----------
 export default function WhyMartySection() {
   return (
-    <section id="why-marty" className="w-full bg-black text-white" role="region" aria-labelledby="why-marty-heading">
+    <section tabIndex={-1} id="why-marty" className="w-full bg-black text-white" role="region" aria-labelledby="why-marty-heading">
       <div className="mx-auto max-w-5xl px-6 py-16">
         <h2 id="why-marty-heading" className="text-3xl font-extrabold tracking-tight sm:text-4xl">
           What MARTY is
