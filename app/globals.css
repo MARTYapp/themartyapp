@@ -1,4 +1,4 @@
-/* Tailwind v4 imports */
+/* globals.css - Tailwind v4 style */
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 
@@ -19,5 +19,3 @@ body {
 .sweep, .noise {
   display: none;
 }
-
-/* etc... */
