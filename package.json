@@ -1,15 +1,20 @@
 {
-  "name": "themartyapp",
-  "version": "0.1.0",
-  "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "format": "prettier --write .",
     "prepare": "husky install",
     "postinstall": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install; fi"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "next": "^15.5.4",
+    "postcss": "^8.5.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.14"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.14",
@@ -17,21 +22,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "eslint": "^9.36.0",
-    "husky": "^9.0.0",
+    "husky": "^9.1.7",
     "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "autoprefixer": "^10.4.21",
-    "framer-motion": "^12.23.22",
-    "next": "^15.5.4",
-    "openai": "^6.1.0",
-    "postcss": "^8.5.6",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "tailwindcss": "^4.1.14",
-    "lightningcss": "^1.5.0"
-  },
-  "engines": {
-    "node": "20.18.0"
   }
 }

@@ -1,9 +1,8 @@
-/* Import Tailwind's base styles (preflight) */
+/* Tailwind v4 imports */
 @import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
 
-/* Import Tailwind utilities *@import "tailwindcss/utilitiestailwind utilities;
-
-/* Your actual CSS content */
+/* Your custom CSS below */
 :root {
   --background: #000;
   --foreground: #fff;
