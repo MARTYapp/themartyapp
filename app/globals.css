@@ -1,6 +1,5 @@
-/* globals.css - Tailwind v4 style */
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+/* Tailwind v4 imports */
+@import "tailwindcss";
 
 /* Your custom CSS below */
 :root {
@@ -16,6 +15,9 @@ body {
   line-height: 1.6;
 }
 
-.sweep, .noise {
+.sweep,
+.noise {
   display: none;
 }
+
+/* Add any other custom global styles below */
