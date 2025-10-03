@@ -1,13 +1,12 @@
-import { NextConfig } from "next";
+import * as path from 'path';
+import type { NextConfig } from 'next';
+import type { Configuration } from 'webpack';
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
-  eslint: { ignoreDuringBuilds: false },
-  images: {
-    domains: ["themartyapp.com", "cdn.themartyapp.com"],
-  },
-  experimental: {
-    // Keep empty or add valid experimental flags if needed
+  webpack(config: Configuration) {
+    const alias = config.resolve!.alias as { [key: string]: string };
+    alias['@'] = path.resolve(__dirname);
+    return config;
   },
 };
 
