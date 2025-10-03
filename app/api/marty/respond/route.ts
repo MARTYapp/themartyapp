@@ -11,9 +11,7 @@ function buildSystemPrompt(modules: string[]): string {
   return `You are MARTY, a supportive AI guide. Modules active: ${modules.join(", ") || "none"}.`;
 }
 
-// Select GPT model dynamically based on complexity
 function selectModel(modules: string[]): string {
-  // Example logic: if advanced EF or CBT, use larger model
   if (modules.includes("ef") || modules.includes("cbt")) return "gpt-5-mini";
   return "gpt-5-nano";
 }
@@ -38,18 +36,14 @@ export async function POST(req: Request) {
       ],
     });
 
-    return NextResponse.json({
-      reply: completion.choices[0].message?.content ?? "",
-    });
-  } catch (err) {
-    const error = err as any;
-    if (error instanceof OpenAI.APIError) {
-      return NextResponse.json({ error: error.message }, { status: error.status ?? 500 });
-    }
+    const reply = completion.choices?.[0]?.message?.content || "";
+
+    return NextResponse.json({ reply });
+  } catch (err: any) {
     console.error(err);
-    return NextResponse.json(
-      { error: "Failed to get MARTY response" },
-      { status: 500 }
-    );
+    if (err instanceof OpenAI.APIError) {
+      return NextResponse.json({ error: err.message }, { status: err.status ?? 500 });
+    }
+    return NextResponse.json({ error: "Failed to get MARTY response" }, { status: 500 });
   }
 }
