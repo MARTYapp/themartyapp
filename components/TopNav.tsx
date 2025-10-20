@@ -1,15 +1,22 @@
 // components/TopNav.tsx
 "use client";
 
+import React from "react";
 import Link from "next/link";
 
-import { JSX } from "react";
-
-export default function TopNav(): JSX.Element {
+/**
+ * Sticky top navigation bar for The MARTY App.
+ * Includes site branding and key navigation links.
+ */
+export default function TopNav() {
   return (
     <header className="sticky top-0 z-50 w-full bg-black/80 backdrop-blur border-b border-white/10">
       <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between relative">
-        <Link href="/" title="Site built by Eric Adler" className="text-sm font-black tracking-widest glitch-text">
+        <Link
+          href="/"
+          title="Site built by Eric Adler"
+          className="text-sm font-black tracking-widest glitch-text"
+        >
           the MARTY app
         </Link>
 

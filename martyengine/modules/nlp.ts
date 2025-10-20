@@ -1,10 +1,12 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY!,
+});
 
 export interface Analysis {
   sentiment: "positive" | "negative" | "neutral";
-  confidence?: number;
+  confidence: number;
 }
 
 type ChatMessage = {
@@ -17,40 +19,45 @@ export async function analyzeText(input: string): Promise<Analysis> {
     const messages: ChatMessage[] = [
       {
         role: "system",
-        content: "You are an NLP analyzer. Classify sentiment as positive, negative, or neutral. Also provide a confidence score as a number between 0 and 1."
+        content: `
+          You are an NLP analyzer. Return a JSON object ONLY with:
+          {
+            "sentiment": "positive" | "negative" | "neutral",
+            "confidence": number between 0 and 1
+          }
+          No explanation, just valid JSON.
+        `,
       },
-      { role: "user", content: input }
+      { role: "user", content: input },
     ];
 
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
       messages,
-      max_tokens: 50
+      response_format: { type: "json_object" },
+      max_tokens: 50,
     });
 
-    const message = completion.choices?.[0]?.message;
-    const content = message?.content?.toLowerCase() || "";
+    const raw = completion.choices[0]?.message?.content || "{}";
+    const parsed = JSON.parse(raw);
 
-    let sentiment: Analysis["sentiment"] = "neutral";
-    if (content.includes("positive")) {
-      sentiment = "positive";
-    } else if (content.includes("negative")) {
-      sentiment = "negative";
-    }
+    const sentiment =
+      parsed.sentiment === "positive" ||
+      parsed.sentiment === "negative" ||
+      parsed.sentiment === "neutral"
+        ? parsed.sentiment
+        : "neutral";
 
-    // Attempt to parse confidence from content, expecting a number between 0 and 1
-    let confidence: number | undefined = undefined;
-    const confidenceMatch = content.match(/confidence[:\s]*([0-9]*\.?[0-9]+)/);
-    if (confidenceMatch) {
-      const parsed = parseFloat(confidenceMatch[1]);
-      if (!isNaN(parsed) && parsed >= 0 && parsed <= 1) {
-        confidence = parsed;
-      }
-    }
+    const confidence =
+      typeof parsed.confidence === "number" &&
+      parsed.confidence >= 0 &&
+      parsed.confidence <= 1
+        ? parsed.confidence
+        : 0.5;
 
     return { sentiment, confidence };
   } catch (err) {
     console.error("NLP error:", err);
-    return { sentiment: "neutral" };
+    return { sentiment: "neutral", confidence: 0.5 };
   }
 }
