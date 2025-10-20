@@ -1,9 +1,13 @@
 import path from "path";
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   webpack: (config) => {
-    config.resolve.alias["@"] = path.resolve(__dirname);
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      "@": path.resolve(__dirname),
+    };
+    config.resolve.extensions = [".ts", ".tsx", ".js", ".jsx"];
     return config;
   },
 };
