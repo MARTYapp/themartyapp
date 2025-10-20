@@ -1,16 +1,12 @@
 [build]
-  command = "npm run build"
+  command = "NEXT_DISABLE_ESLINT=true npm run build"
   publish = ".next"
   functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "20.17.0"
-  NEXT_DISABLE_ESLINT = "true"
   NEXT_TELEMETRY_DISABLED = "1"
-  # Optional — keeps TypeScript quiet about baseUrl deprecation
-  TS_NODE_PROJECT = "tsconfig.build.json"
 
-# ✅ Enables persistent caching for faster rebuilds
 [build.cache]
   paths = [
     "node_modules/.cache",
@@ -18,7 +14,6 @@
     ".eslintcache"
   ]
 
-# Optional: redirects (you can remove if not needed)
 [[redirects]]
   from = "/*"
   to = "/"
