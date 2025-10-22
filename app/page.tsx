@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import MissionModal from "@/components/modals/MissionModal";
-import FeaturesModal from "@/components/modals/FeaturesModal";
-import UpgradeModal from "@/components/modals/UpgradeModal";
+
+import MissionModal from "@/components/content-modals/MissionModal";
+import FeaturesModal from "@/components/content-modals/FeaturesModal";
+import UpgradeModal from "@/components/content-modals/UpgradeModal";
 
 export default function HomePage() {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
@@ -15,12 +17,12 @@ export default function HomePage() {
     <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center relative overflow-hidden">
       {/* ===== Top Nav ===== */}
       <nav className="absolute top-6 left-0 right-0 flex justify-between items-center px-6 text-sm sm:text-base">
-        <a
+        <Link
           href="/"
           className="text-blue-500 font-medium hover:opacity-80 transition"
         >
           theMARTYapp
-        </a>
+        </Link>
         <div className="space-x-6">
           <button
             onClick={() => setShowMission(true)}
@@ -68,12 +70,12 @@ export default function HomePage() {
       {!showDisclaimer && (
         <div className="flex flex-col items-center justify-center min-h-screen text-center space-y-10">
           <div className="flex justify-between w-full px-8">
-            <a
+            <Link
               href="/"
               className="text-[#3B82F6] font-medium hover:opacity-80 transition"
             >
               theMARTYapp
-            </a>
+            </Link>
             <button
               onClick={() => setShowUpgrade(true)}
               className="text-[#3B82F6] hover:opacity-80 transition"
