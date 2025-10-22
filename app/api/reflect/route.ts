@@ -17,7 +17,8 @@ export async function POST(req: Request) {
 
     const { data, error } = await supabase
       .from("reflections")
-      .insert([{ user_id, message, emotion }]);
+      .insert([{ user_id, message, emotion }])
+      .select();
 
     if (error) throw error;
 
