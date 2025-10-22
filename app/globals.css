@@ -11,3 +11,12 @@ body {
 button {
   font-weight: 500;
 }
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thumb-gray-800::-webkit-scrollbar-thumb {
+  background-color: #2a2a2a;
+  border-radius: 3px;
+}
