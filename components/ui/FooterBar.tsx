@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 export default function FooterBar() {
   const router = useRouter()
@@ -15,16 +16,18 @@ export default function FooterBar() {
 
         {/* 🔥 Here's where the glow effect lives */}
         <div className="relative mt-1">
-          <img
+          <Image
             src="/icons/wave-animated.svg"
-            className="w-20 h-4 opacity-80 relative z-10"
-            alt="wave"
+            width={80}
+            height={16}
+            alt="wave animation"
+            className="opacity-80 relative z-10"
           />
           <div className="absolute inset-0 blur-md bg-blue-500/20 animate-pulse"></div>
         </div>
       </div>
 
-      <img src="/icons/mic.svg" className="w-6 h-6" alt="mic" />
+      <Image src="/icons/mic.svg" alt="mic" width={24} height={24} />
     </footer>
   )
 }

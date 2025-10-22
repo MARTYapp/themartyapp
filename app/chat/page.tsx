@@ -1,5 +1,6 @@
- "use client"
+"use client"
 import { useState } from "react"
+import Image from "next/image"
 
 export default function ChatPage() {
   const [isThinking, setIsThinking] = useState(true)
@@ -11,10 +12,12 @@ export default function ChatPage() {
           <div className="flex flex-col items-center justify-center h-full">
             <p className="text-gray-400 mb-2">MARTY is thinking...</p>
             <div className="relative">
-              <img
+              <Image
                 src="/icons/wave-animated.svg"
-                className="w-24 h-6 opacity-80 relative z-10"
+                width={96}
+                height={24}
                 alt="thinking wave"
+                className="opacity-80 relative z-10"
               />
               <div className="absolute inset-0 blur-md bg-blue-500/20 animate-pulse"></div>
             </div>
