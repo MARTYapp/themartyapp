@@ -1,11 +1,16 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <>
       <section className="flex flex-col items-center justify-center text-center min-h-[90vh] px-4">
-        <img
+        <Image
           src="/branding/Logo-MARTYnotTHERAPY.png"
           alt="MARTY ≠ THERAPY"
-          className="w-48 sm:w-64 opacity-90 mb-6"
+          width={256}
+          height={256}
+          className="opacity-90 mb-6"
+          priority
         />
         <h1 className="text-4xl sm:text-5xl font-semibold mb-4">
           Not a therapist. Not a vibe app. Just MARTY.

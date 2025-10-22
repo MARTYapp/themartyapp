@@ -39,8 +39,13 @@ export async function POST(req: Request) {
     ]);
 
     return NextResponse.json({ reply });
-  } catch (error: any) {
-    console.error("Chat API error:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Chat API error:", error.message);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    } else {
+      console.error("Unknown error:", error);
+      return NextResponse.json({ error: "Unknown error occurred" }, { status: 500 });
+    }
   }
 }

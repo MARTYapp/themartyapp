@@ -29,8 +29,13 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ received: true });
-  } catch (err: any) {
-    console.error("Webhook error:", err.message);
-    return NextResponse.json({ error: err.message }, { status: 400 });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Webhook error:", error.message);
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    } else {
+      console.error("Unknown error:", error);
+      return NextResponse.json({ error: "Unknown error occurred" }, { status: 400 });
+    }
   }
 }
