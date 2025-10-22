@@ -10,6 +10,7 @@
     "postinstall": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install; fi"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.76.1",
     "autoprefixer": "^10.4.21",
     "framer-motion": "^12.23.22",
     "next": "^15.5.4",
