@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import Link from "next/link";
 import Image from "next/image";
 
