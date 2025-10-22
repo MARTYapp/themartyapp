@@ -18,20 +18,22 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "public/**",
+      "scripts/**",
     ],
     rules: {
       "no-restricted-syntax": [
         "error",
         {
-          "selector": "Literal[value='Marty']",
-          "message": "Always write MARTY in all caps."
+          selector: "Literal[value='Marty']",
+          message: "Always write MARTY in all caps.",
         },
         {
-          "selector": "Literal[value='marty']",
-          "message": "Always write MARTY in all caps."
-        }
-      ]
-    }
+          selector: "Literal[value='marty']",
+          message: "Always write MARTY in all caps.",
+        },
+      ],
+    },
   },
 ];
 
