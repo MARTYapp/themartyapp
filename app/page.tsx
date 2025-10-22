@@ -1,51 +1,54 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
+  const [showMission, setShowMission] = useState(true);
+
   return (
-    <>
-      <section className="flex flex-col items-center justify-center text-center min-h-[90vh] px-4">
-        <Image
-          src="/branding/Logo-MARTYnotTHERAPY.png"
-          alt="MARTY ≠ THERAPY"
-          width={256}
-          height={256}
-          className="opacity-90 mb-6"
-          priority
-        />
-        <h1 className="text-4xl sm:text-5xl font-semibold mb-4">
-          Not a therapist. Not a vibe app. Just MARTY.
-        </h1>
-        <p className="text-gray-400 max-w-lg">
-          A masculine, emotionally fluent ecosystem bridging recovery, coaching, and self-awareness.
-        </p>
-        <button className="mt-8 px-6 py-3 rounded-md bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-105 transition">
-          Launch the Beta
-        </button>
-      </section>
+    <main className="relative flex flex-col items-center justify-center min-h-screen bg-[#0B0C0F] text-gray-100">
+      {/* Top Nav */}
+      <nav className="absolute top-6 left-6 flex items-center space-x-4 text-sm text-gray-400">
+        <Link href="/" className="font-semibold hover:text-white transition">
+          theMARTYapp
+        </Link>
+        <Link href="/about" className="hover:text-white transition">
+          About
+        </Link>
+        <Link href="/fund" className="hover:text-white transition">
+          #FundTheFounder
+        </Link>
+      </nav>
 
-      <section className="max-w-3xl mx-auto px-6 py-20 text-center space-y-6">
-        <h2 className="text-3xl font-semibold text-gray-100">Our Mission</h2>
+      {/* Mission Modal */}
+      {showMission && (
+        <div className="bg-[#151618]/90 border border-gray-800 rounded-2xl shadow-xl p-10 max-w-xl text-center backdrop-blur-lg">
+          <h1 className="text-4xl font-semibold mb-4">
+            Not a therapist. Not a vibe app. Just MARTY.
+          </h1>
 
-        <p className="text-gray-300 leading-relaxed">
-          <strong>MARTY</strong> helps people turn emotional chaos into clarity —
-          without pretending to be therapy.
-        </p>
+          <p className="text-gray-400 leading-relaxed mb-6">
+            An emotionally fluent, modern ecosystem bridging recovery, coaching,
+            and self-awareness. Built to turn chaos into clarity — without pretending
+            to be therapy.
+          </p>
 
-        <p className="text-gray-400 leading-relaxed">
-          It’s not here to replace counseling; it’s here to make mental wellness
-          accessible, masculine, modern, and emotionally fluent.
-        </p>
+          <button
+            onClick={() => {
+              setShowMission(false);
+              window.location.href = "/chat";
+            }}
+            className="mt-4 px-6 py-3 rounded-md bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-105 transition"
+          >
+            Launch MARTY
+          </button>
 
-        <p className="text-gray-400 leading-relaxed">
-          <strong>MARTY ≠ THERAPY.</strong> It’s a reflection partner — a mirror that talks
-          back, built for people who might never walk into a therapist’s office but
-          still want the structure of emotional accountability.
-        </p>
-
-        <p className="text-gray-500 italic mt-10">
-          Built and founded by <span className="text-gray-300 not-italic">Eric Adler</span>.
-        </p>
-      </section>
-    </>
+          <p className="text-sm text-gray-500 mt-8">
+            Built and founded by <span className="text-gray-300">Eric Adler</span>.
+          </p>
+        </div>
+      )}
+    </main>
   );
 }
