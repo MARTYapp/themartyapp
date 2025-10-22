@@ -5,7 +5,7 @@
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "format": "prettier --write .",
-    "typecheck": "tsc --project tsconfig.paths.json --noEmit",
+    "type-check": "tsc --noEmit",
     "prepare": "husky install",
     "postinstall": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install; fi"
   },
