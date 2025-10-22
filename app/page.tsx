@@ -1,5 +1,6 @@
 export default function Home() {
-    return (
+  return (
+    <>
       <section className="flex flex-col items-center justify-center text-center min-h-[90vh] px-4">
         <img
           src="/branding/Logo-MARTYnotTHERAPY.png"
@@ -16,5 +17,30 @@ export default function Home() {
           Launch the Beta
         </button>
       </section>
-    );
-  }
+
+      <section className="max-w-3xl mx-auto px-6 py-20 text-center space-y-6">
+        <h2 className="text-3xl font-semibold text-gray-100">Our Mission</h2>
+
+        <p className="text-gray-300 leading-relaxed">
+          <strong>MARTY</strong> helps people turn emotional chaos into clarity —
+          without pretending to be therapy.
+        </p>
+
+        <p className="text-gray-400 leading-relaxed">
+          It’s not here to replace counseling; it’s here to make mental wellness
+          accessible, masculine, modern, and emotionally fluent.
+        </p>
+
+        <p className="text-gray-400 leading-relaxed">
+          <strong>MARTY ≠ THERAPY.</strong> It’s a reflection partner — a mirror that talks
+          back, built for people who might never walk into a therapist’s office but
+          still want the structure of emotional accountability.
+        </p>
+
+        <p className="text-gray-500 italic mt-10">
+          Built and founded by <span className="text-gray-300 not-italic">Eric Adler</span>.
+        </p>
+      </section>
+    </>
+  );
+}
