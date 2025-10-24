@@ -9,12 +9,12 @@ const eslintConfig = [
   {
     files: ["app/**/*.{ts,tsx,js,jsx}", "components/**/*.{ts,tsx,js,jsx}", "lib/**/*.{ts,tsx,js,jsx}"],
     ignores: [
-      ".next/",
-      "node_modules/",
-      "out/",
-      "dist/",
-      "build/",
-      "scripts/",
+      ".next/**",
+      "node_modules/**",
+      "out/**",
+      "dist/**",
+      "build/**",
+      "scripts/**",
       "*.config.*",
       "*.d.ts",
       "cleanup-marty.sh",
@@ -26,14 +26,8 @@ const eslintConfig = [
     rules: {
       "no-restricted-syntax": [
         "error",
-        {
-          selector: "Literal[value='Marty']",
-          message: "Always write MARTY in all caps.",
-        },
-        {
-          selector: "Literal[value='marty']",
-          message: "Always write MARTY in all caps.",
-        },
+        { selector: "Literal[value='Marty']", message: "Always write MARTY in all caps." },
+        { selector: "Literal[value='marty']", message: "Always write MARTY in all caps." },
       ],
     },
   },
