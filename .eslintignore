@@ -1,0 +1,15 @@
+# Ignore build artifacts and dependencies
+.next
+node_modules
+dist
+out
+coverage
+
+# Ignore environment and config files
+.env
+.env.local
+*.config.js
+*.config.ts
+
+# Ignore type build cache
+tsconfig.tsbuildinfo
