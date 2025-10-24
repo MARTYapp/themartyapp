@@ -1,102 +1,91 @@
-"use client";
+"use client"
+import { useEffect, useState } from "react"
+import "./globals.css"
 
-import Link from "next/link";
-import { useState } from "react";
+export default function Home() {
+  const [showOverlay, setShowOverlay] = useState(true)
+  const [fadeOut, setFadeOut] = useState(false)
 
-import MissionModal from "@/components/content-modals/MissionModal";
-import FeaturesModal from "@/components/content-modals/FeaturesModal";
-import UpgradeModal from "@/components/content-modals/UpgradeModal";
-
-export default function HomePage() {
-  const [showDisclaimer, setShowDisclaimer] = useState(true);
-  const [showMission, setShowMission] = useState(false);
-  const [showFeatures, setShowFeatures] = useState(false);
-  const [showUpgrade, setShowUpgrade] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFadeOut(true)
+      setTimeout(() => setShowOverlay(false), 1000)
+    }, 3000)
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center relative overflow-hidden">
-      {/* ===== Top Nav ===== */}
-      <nav className="absolute top-6 left-0 right-0 flex justify-between items-center px-6 text-sm sm:text-base">
-        <Link
-          href="/"
-          className="text-blue-500 font-medium hover:opacity-80 transition"
+    <main className="relative min-h-screen bg-black text-white overflow-hidden">
+      {/* ===== Magical Overlay ===== */}
+      {showOverlay && (
+        <div
+          className={`
+            fixed inset-0 z-50 flex items-center justify-center text-center
+            bg-[rgba(0,112,243,0.75)] backdrop-blur-md
+            transition-opacity duration-1000 ease-out
+            ${fadeOut ? "opacity-0" : "opacity-100"}
+          `}
         >
-          theMARTYapp
-        </Link>
-        <div className="space-x-6">
-          <button
-            onClick={() => setShowMission(true)}
-            className="text-gray-400 hover:text-blue-500 transition"
+          <div
+            className="
+              animate-[pulseGlow_3s_ease-in-out_infinite]
+              flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10
+              p-8 sm:p-16 text-white"
           >
-            mission
-          </button>
-          <button
-            onClick={() => setShowFeatures(true)}
-            className="text-gray-400 hover:text-blue-500 transition"
-          >
-            features
-          </button>
-        </div>
-      </nav>
+            <div className="max-w-md space-y-4">
+              <h1 className="text-3xl sm:text-5xl font-bold tracking-tight drop-shadow-[0_0_10px_rgba(59,130,246,0.9)]">
+                MARTY ≠ THERAPY
+              </h1>
+              <p className="text-lg sm:text-xl opacity-90 leading-snug">
+                Not a therapist. Not a vibe app.<br />
+                Just MARTY.
+              </p>
+              <p className="text-sm uppercase tracking-wider opacity-80 mt-4">
+                Built & Founded by Eric Adler, 2025
+              </p>
+            </div>
 
-      {/* ===== Disclaimer Modal (Landing) ===== */}
-      {showDisclaimer && (
-        <section className="flex flex-col items-center justify-center text-center px-6">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-snug mb-6">
-            Not a therapist.<br />
-            Not a vibe app.<br />
-            Just MARTY.
-          </h1>
-
-          <p className="text-gray-400 text-lg sm:text-xl max-w-[28ch] md:max-w-[36ch] leading-relaxed mb-10">
-            An emotionally fluent, modern ecosystem<br />
-            bridging recovery, coaching,<br />
-            and self-awareness.<br />
-            <br />
-            Built to turn chaos into clarity —<br />
-            without pretending to be therapy.
-          </p>
-
-          <button
-            onClick={() => setShowDisclaimer(false)}
-            className="mt-4 px-6 py-3 rounded-full text-[#3B82F6] border border-[#3B82F6] font-semibold hover:bg-[#3B82F6] hover:text-black transition duration-200 ease-out"
-          >
-            Launch MARTY
-          </button>
-        </section>
-      )}
-
-      {/* ===== Chat View (Placeholder for now) ===== */}
-      {!showDisclaimer && (
-        <div className="flex flex-col items-center justify-center min-h-screen text-center space-y-10">
-          <div className="flex justify-between w-full px-8">
-            <Link
-              href="/"
-              className="text-[#3B82F6] font-medium hover:opacity-80 transition"
-            >
-              theMARTYapp
-            </Link>
             <button
-              onClick={() => setShowUpgrade(true)}
-              className="text-[#3B82F6] hover:opacity-80 transition"
+              onClick={() => {
+                setFadeOut(true)
+                setTimeout(() => setShowOverlay(false), 1000)
+              }}
+              className="
+                mt-6 sm:mt-0 px-8 py-3 text-sm sm:text-base font-semibold
+                bg-white text-black rounded-full shadow-lg hover:scale-105
+                transition-transform duration-300 ease-in-out
+              "
             >
-              upgrade
+              Launch MARTY
             </button>
           </div>
-
-          <button className="px-6 py-3 rounded-full bg-[#3B82F6] text-black font-semibold hover:bg-blue-600 transition">
-            Talk to MARTY
-          </button>
         </div>
       )}
 
-      {/* ===== Modals ===== */}
-      <MissionModal show={showMission} onClose={() => setShowMission(false)} />
-      <FeaturesModal
-        show={showFeatures}
-        onClose={() => setShowFeatures(false)}
-      />
-      <UpgradeModal show={showUpgrade} onClose={() => setShowUpgrade(false)} />
+      {/* ===== Main Page ===== */}
+      <section className="flex flex-col items-center justify-center min-h-screen px-6 text-center">
+        <h1 className="text-4xl sm:text-5xl font-semibold mb-4">
+          Not a therapist. Not a vibe app. Just MARTY.
+        </h1>
+        <p className="text-gray-400 max-w-lg">
+          A modern emotional intelligence ecosystem. Quiet tech for loud minds.
+        </p>
+      </section>
+
+      {/* ===== Keyframes ===== */}
+      <style jsx global>{`
+        @keyframes pulseGlow {
+          0% {
+            box-shadow: 0 0 20px rgba(0, 112, 243, 0.4);
+          }
+          50% {
+            box-shadow: 0 0 40px rgba(0, 112, 243, 0.9);
+          }
+          100% {
+            box-shadow: 0 0 20px rgba(0, 112, 243, 0.4);
+          }
+        }
+      `}</style>
     </main>
-  );
+  )
 }
