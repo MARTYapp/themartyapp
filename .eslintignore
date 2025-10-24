@@ -1,11 +1,11 @@
 # Ignore build outputs
-.next/
-out/
-dist/
-build/
+**/.next/
+**/out/
+**/dist/
+**/build/
 
 # Ignore dependencies
-node_modules/
+**/node_modules/
 
 # Ignore configuration and environment files
 *.config.js
@@ -14,7 +14,7 @@ node_modules/
 *.d.ts
 
 # Ignore scripts
-scripts/
+**/scripts/
 cleanup-marty.sh
 
 # Ignore lock files
