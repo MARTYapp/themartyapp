@@ -1,25 +1,26 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+const compat = new FlatCompat();
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  js.configs.recommended,
   {
     ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-      "public/**",
-      "scripts/**",
+      ".next/",
+      "node_modules/",
+      "out/",
+      "dist/",
+      "build/",
+      "scripts/",
+      "*.config.*",
+      "*.d.ts",
+      "cleanup-marty.sh",
+      "package-lock.json",
+      "pnpm-lock.yaml",
+      "yarn.lock",
+      ".env*",
     ],
     rules: {
       "no-restricted-syntax": [
