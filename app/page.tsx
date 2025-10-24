@@ -27,10 +27,11 @@ export default function Home() {
           `}
         >
           <div
-            className="
+            className={`
               animate-[pulseGlow_3s_ease-in-out_infinite]
               flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10
-              p-8 sm:p-16 text-white"
+              p-8 sm:p-16 text-white
+            `}
           >
             <div className="max-w-md space-y-4">
               <h1 className="text-3xl sm:text-5xl font-bold tracking-tight drop-shadow-[0_0_10px_rgba(59,130,246,0.9)]">
