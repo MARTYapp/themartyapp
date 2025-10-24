@@ -51,11 +51,11 @@ export default function Home() {
                 setFadeOut(true)
                 setTimeout(() => setShowOverlay(false), 1000)
               }}
-              className="
+              className={`
                 mt-6 sm:mt-0 px-8 py-3 text-sm sm:text-base font-semibold
                 bg-white text-black rounded-full shadow-lg hover:scale-105
                 transition-transform duration-300 ease-in-out
-              "
+              `}
             >
               Launch MARTY
             </button>
