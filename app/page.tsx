@@ -22,6 +22,7 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen bg-black text-white overflow-hidden">
+      {/* ===== Background Chat Placeholder (Blurry Behind Overlay) ===== */}
       <section
         className={`flex flex-col items-center justify-center min-h-screen px-6 text-center transition-filter duration-1000 ease-out ${
           showOverlay && !fadeOut ? "blur-sm brightness-75" : ""
@@ -32,34 +33,34 @@ export default function Home() {
         </h1>
       </section>
 
+      {/* ===== Cinematic Overlay ===== */}
       {showOverlay && (
         <div
           className={`
-            fixed inset-0 z-50 flex items-center justify-center
+            fixed inset-0 z-[9999] flex items-center justify-center
+            bg-[rgba(0,112,243,0.85)] backdrop-blur-lg
             transition-opacity duration-1000 ease-out
             ${fadeOut ? "opacity-0" : "opacity-100"}
           `}
         >
           <div
             className={`
-              max-w-md w-full bg-[rgba(0,112,243,0.85)] rounded-xl
               animate-[pulseGlow_3s_ease-in-out_infinite]
-              p-8 sm:p-16 text-white text-center shadow-lg
-              backdrop-blur-md
+              flex flex-col items-center justify-center
+              text-center space-y-6 max-w-lg mx-4 p-8 sm:p-12 rounded-3xl
+              bg-black/40 border border-[#0070f3]/40 shadow-[0_0_40px_rgba(0,112,243,0.6)]
             `}
           >
-            <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight drop-shadow-[0_0_10px_rgba(59,130,246,0.9)]">
-                Not a therapist. Not a vibe app. Just MARTY.
-              </h1>
-              <p className="text-lg sm:text-xl opacity-90 leading-snug">
-                A modern emotional intelligence ecosystem. <br />
-                Quiet tech for loud minds.
-              </p>
-              <p className="text-sm uppercase tracking-wider opacity-80 mt-4">
-                Founded by Eric Adler, 2025
-              </p>
-            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white drop-shadow-[0_0_15px_rgba(59,130,246,0.9)]">
+              Not a therapist. Not a vibe app. Just MARTY.
+            </h1>
+            <p className="text-base sm:text-lg text-blue-100 leading-snug">
+              A modern emotional intelligence ecosystem. <br />
+              Quiet tech for loud minds.
+            </p>
+            <p className="text-xs uppercase tracking-wider text-blue-200">
+              Founded by Eric Adler, 2025
+            </p>
 
             <button
               onClick={() => {
@@ -69,9 +70,7 @@ export default function Home() {
                   router.push("/chat")
                 }, 1000)
               }}
-              className={`mt-6 px-8 py-3 text-sm sm:text-base font-semibold
-                bg-white text-black rounded-full shadow-lg hover:scale-105
-                transition-transform duration-300 ease-in-out`}
+              className="mt-6 px-8 py-3 bg-white text-black font-semibold rounded-full shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
             >
               Launch MARTY
             </button>
@@ -79,6 +78,7 @@ export default function Home() {
         </div>
       )}
 
+      {/* ===== Global Glow Animation ===== */}
       <style jsx global>{`
         @keyframes pulseGlow {
           0% {
