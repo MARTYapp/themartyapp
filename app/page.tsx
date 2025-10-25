@@ -22,23 +22,33 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen bg-black text-white overflow-hidden">
+      <section
+        className={`flex flex-col items-center justify-center min-h-screen px-6 text-center transition-filter duration-1000 ease-out ${
+          showOverlay && !fadeOut ? "blur-sm brightness-75" : ""
+        }`}
+      >
+        <h1 className="text-3xl sm:text-5xl font-semibold mb-4">
+          Loading MARTY...
+        </h1>
+      </section>
+
       {showOverlay && (
         <div
           className={`
-            fixed inset-0 z-50 flex items-center justify-center text-center
-            bg-[rgba(0,112,243,0.75)] backdrop-blur-md
+            fixed inset-0 z-50 flex items-center justify-center
             transition-opacity duration-1000 ease-out
             ${fadeOut ? "opacity-0" : "opacity-100"}
           `}
         >
           <div
             className={`
+              max-w-md w-full bg-[rgba(0,112,243,0.85)] rounded-xl
               animate-[pulseGlow_3s_ease-in-out_infinite]
-              flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10
-              p-8 sm:p-16 text-white text-center
+              p-8 sm:p-16 text-white text-center shadow-lg
+              backdrop-blur-md
             `}
           >
-            <div className="max-w-md space-y-4">
+            <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl font-bold tracking-tight drop-shadow-[0_0_10px_rgba(59,130,246,0.9)]">
                 Not a therapist. Not a vibe app. Just MARTY.
               </h1>
@@ -59,7 +69,7 @@ export default function Home() {
                   router.push("/chat")
                 }, 1000)
               }}
-              className={`mt-6 sm:mt-0 px-8 py-3 text-sm sm:text-base font-semibold
+              className={`mt-6 px-8 py-3 text-sm sm:text-base font-semibold
                 bg-white text-black rounded-full shadow-lg hover:scale-105
                 transition-transform duration-300 ease-in-out`}
             >
@@ -68,12 +78,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
-      <section className="flex flex-col items-center justify-center min-h-screen px-6 text-center">
-        <h1 className="text-3xl sm:text-5xl font-semibold mb-4">
-          Loading MARTY...
-        </h1>
-      </section>
 
       <style jsx global>{`
         @keyframes pulseGlow {
